@@ -2,52 +2,229 @@
     <head>
         <meta charset="utf-8">
         <title>Portfolio - Jhon Doe</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/f56f6708a5.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
-        <!-- Bloque de Inicio -->
-        <div>
-            <h2>Jhon Doe</h2>
-            <h3>#Developer</h3>
-            <h3>#Musician</h3>
-        </div>
-        <!-- Fin de Bloque de inicio -->
+        <nav>
+            <ul>
+                <li><a href="#sobremi">About me</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li id="logo"><a href="#"><img src="/img/cascos.png" alt="Headphones"></a></li>
+                <li><a href="#experiencia">Skills</a></li>
+                <li><a href="#contacto">Contact</a></li>
+            </ul>
+        </nav>
+        <article>
+                <!-- Bloque de Inicio -->
+                <section id="inicio">
+                    <h2>Jhon Doe</h2>
+                    <h3 class="hashtag">#Developer</h3>
+                    <h3 class="hashtag">#Musician</h3>
+                    <ul id="socials">
+                        <li><a href="#"><i class="fa-brands fa-spotify"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-square-instagram"></i></a></li>
+                    </ul>
+                </section>
+            <!-- Fin de Bloque de inicio -->
 
-        <!-- Bloque sobre mí-->
-        <div>
-            <h2>Sobre mí</h2>
-            <img src="img/about-img.png" alt="Jhon Doe's Photo" height="250px">
-            <p>Lorem, ipsum dolor sit amet <strong>adipisicing elit</strong>. Aperiam cumque iste doloribus, <span>corporis suscipit</span> recusandae numquam quaerat excepturi ipsum eligendi incidunt fugit optio quisquam ea minus eveniet? Est, quidem facilis.</p>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti odit quos tempore ab iusto optio blanditiis aut accusantium maxime vitae nam, eaque architecto! Quia veritatis, iusto porro mollitia aspernatur autem.</p>
-        </div>
-        <!-- Fin de bloque sobre mí -->
-        <!-- Bloque de Portfolio -->
-        <div>
-            <h2>Portfolio</h2>
-            <h3>Una mirada más allá del texto</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Music</td>
-                        <td>Production</td>
-                        <td>Web</td>
-                        <td>Design</td>
-                    </tr>
-                    <tr>
-                        <td>Concerts</td>
-                        <td>BSOs</td>
-                        <td>App</td>
-                        <td>Design</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <!-- Bloque sobre mí-->
+            <section id="sobremi">
+                <div id="imgsobremi">
+                    <img src="img/about-img_250.png" alt="Jhon Doe's Photo">
+                </div>
+                <div id="bodysobremi">
+                    <h2>About me</h2>
+                    <p>Lorem, ipsum dolor sit amet <strong>adipisicing elit</strong>. Aperiam cumque iste doloribus, <span>corporis suscipit</span> recusandae numquam quaerat excepturi ipsum eligendi incidunt fugit optio quisquam ea minus eveniet? Est, quidem facilis.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti odit quos tempore ab iusto optio blanditiis aut <cite> accusantium maxime vitae nam, eaque architecto! Quia veritatis</cite>, iusto porro mollitia aspernatur autem.</p>
+                    <div class="masinfo">
+                        <button type="button" class="masinfo">More Info</button>
+                    </div>
+                </div>
+            </section>
+            <!-- Fin de bloque sobre mí -->
+            <!-- Bloque de Portfolio -->
+            <section id="portfolio">
+                <h2>Portfolio</h2>
+                <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h3>
+                <div class="filaportfolio">
+                    <div class="card">
+                        <img src="img/imagen_portfolio.png" alt="Portfolio picture">
+                        <h3>Music</h3>
+                        <h4>Concert</h4>
+                        <div class="sep"></div>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                        <div class="masinfo"><button type="button">MORE INFO</button></div>
+                    </div>
+                    <div class="card">
+                        <img src="img/imagen_portfolio.png" alt="Portfolio picture">
+                        <h3>Music</h3>
+                        <h4>Concert</h4>
+                        <div class="sep"></div>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                        <div class="masinfo"><button type="button">MORE INFO</button></div>
+                    </div>
+                    <div class="card">
+                        <img src="img/imagen_portfolio.png" alt="Portfolio picture">
+                        <h3>Music</h3>
+                        <h4>Concert</h4>
+                        <div class="sep"></div>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                        <div class="masinfo"><button type="button">MORE INFO</button></div>
+                    </div>
+                    <div class="card">
+                        <img src="img/imagen_portfolio.png" alt="Portfolio picture">
+                        <h3>Music</h3>
+                        <h4>Concert</h4>
+                        <div class="sep"></div>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                        <div class="masinfo"><button type="button">MORE INFO</button></div>
+                    </div>
+                    <div class="card">
+                        <img src="img/imagen_portfolio.png" alt="Portfolio picture">
+                        <h3>Music</h3>
+                        <h4>Concert</h4>
+                        <div class="sep"></div>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                        <div class="masinfo"><button type="button">MORE INFO</button></div>
+                    </div>
+                    <div class="card">
+                        <img src="img/imagen_portfolio.png" alt="Portfolio picture">
+                        <h3>Music</h3>
+                        <h4>Concert</h4>
+                        <div class="sep"></div>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                        <div class="masinfo"><button type="button">MORE INFO</button></div>
+                    </div>
+                </div>
+            </section>
+            <!-- FIN Bloque Portfolio-->
+            <!-- Bloque de Experiencia -->
+            <section id="experiencia">
+                <h2>Experience & Skills</h2>
+                <h3>Lorem ipsum dolor sit amet consectetur.</h3>
+                <div class="gridexp">
+                    <div class="cardexp">
+                        <h2>Web Design</h2>
+                        <h3 class="textoizquierda">2017-2022</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                        <ul>
+                            <li><img src="img/tecno_au.png" alt="AU" height="20px"></li>
+                            <li><img src="img/tecno_cu.png" alt="CU" height="20px"></li>
+                            <li><img src="img/tecno_html.png" alt="HTML" height="20px"></li>
+                        </ul>
+                    </div>
+                    <div class="cardexp">
+                        <h2>Web Design</h2>
+                        <h3 class="textoizquierda">2017-2022</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                        <ul>
+                            <li><img src="img/tecno_au.png" alt="AU" height="20px"></li>
+                            <li><img src="img/tecno_cu.png" alt="CU" height="20px"></li>
+                            <li><img src="img/tecno_html.png" alt="HTML" height="20px"></li>
+                        </ul>
+                    </div>
+                    <div class="cardexp">
+                        <h2>Web Design</h2>
+                        <h3 class="textoizquierda">2017-2022</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                        <ul>
+                            <li><img src="img/tecno_au.png" alt="AU" height="20px"></li>
+                            <li><img src="img/tecno_cu.png" alt="CU" height="20px"></li>
+                            <li><img src="img/tecno_html.png" alt="HTML" height="20px"></li>
+                        </ul>
+                    </div>
+                    <div class="cardexp">
+                        <h2>Web Design</h2>
+                        <h3 class="textoizquierda">2017-2022</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                        <ul>
+                            <li><img src="img/tecno_au.png" alt="AU" height="20px"></li>
+                            <li><img src="img/tecno_cu.png" alt="CU" height="20px"></li>
+                            <li><img src="img/tecno_html.png" alt="HTML" height="20px"></li>
+                        </ul>
+                    </div>
+                    <div class="cardexp">
+                        <h2>Web Design</h2>
+                        <h3 class="textoizquierda">2017-2022</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                        <ul>
+                            <li><img src="img/tecno_au.png" alt="AU" height="20px"></li>
+                            <li><img src="img/tecno_cu.png" alt="CU" height="20px"></li>
+                            <li><img src="img/tecno_html.png" alt="HTML" height="20px"></li>
+                        </ul>
+                    </div>
+                    <div class="cardexp">
+                        <h2>Web Design</h2>
+                        <h3 class="textoizquierda">2017-2022</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                        <ul>
+                            <li><img src="img/tecno_au.png" alt="AU" height="20px"></li>
+                            <li><img src="img/tecno_cu.png" alt="CU" height="20px"></li>
+                            <li><img src="img/tecno_html.png" alt="HTML" height="20px"></li>
+                        </ul>
+                    </div>
+                    <div class="cardexp">
+                        <h2>Web Design</h2>
+                        <h3 class="textoizquierda">2017-2022</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                        <ul>
+                            <li><img src="img/tecno_au.png" alt="AU" height="20px"></li>
+                            <li><img src="img/tecno_cu.png" alt="CU" height="20px"></li>
+                            <li><img src="img/tecno_html.png" alt="HTML" height="20px"></li>
+                        </ul>
+                    </div>
+                    <div class="cardexp">
+                        <h2>Web Design</h2>
+                        <h3 class="textoizquierda">2017-2022</h3>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                        <ul>
+                            <li><img src="img/tecno_au.png" alt="AU" height="20px"></li>
+                            <li><img src="img/tecno_cu.png" alt="CU" height="20px"></li>
+                            <li><img src="img/tecno_html.png" alt="HTML" height="20px"></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <!-- FIN Bloque de Experiencia -->
+            <!-- Bloque de contacto-->
+            <section id="contacto">
+                <h2>Contact</h2>
+                <h3>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</h3>
+                <form action="#">
+                    <div class="itemform">
+                        <label for="nombre">Name</label>
+                        <input type="text" id="nombre" name="nombre" minlength="2" maxlength="64" size="14" required>
+                    </div>
+                    <div class="itemform">
+                        <label for="empresa">Concept</label>
+                        <input type="text" id="empresa" name="empresa" minlength="2" maxlength="128" size="14">
+                    </div>
+                    <div class="itemform">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" minlength="10" maxlength="64" size="14" required>
+                    </div>
+                    <div class="itemform">
+                        <label for="mensaje">Message</label>
+                        <textarea name="mensaje" id="mensaje" cols="33" rows="5"></textarea>
+                    </div>
+                    <div class="itemform">
+                        <input type="submit" name="enviar" value="Contact">
+                    </div>
+                </form>
+            </section>
+            <!-- FIN Bloque de contacto-->
+        </article>
+        <footer>
+            <ul>
+                <li class="logo"><a href="#inicio"><img src="/img/cascos.png" alt=""></a></li>
+                <li>Lorem ipsum dolor sit amet consectetur adipisicing elit</li>
+            </ul>
+        </footer>
     </body>
 </html>
