@@ -4,8 +4,8 @@ import ReactDOM from "react-dom/client"; //
 import Product, { Navbar } from "./Product";
 import { Button } from "./Button";
 import { TaskCard } from "./Task";
-import { Saludar } from "./Saludar"; */
-import { Posts } from "./Posts";
+import { Saludar } from "./Saludar";
+import { Posts } from "./Posts"; */
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
