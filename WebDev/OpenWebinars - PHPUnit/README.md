@@ -1,5 +1,7 @@
 # OpenWebinars - PHPUnit
 
+In this [course](https://openwebinars.net/academia/portada/phpunit-principiantes/) I have learned about **Unit testing** using [PHPUnit](https://phpunit.de/index.html) & [Composer](https://getcomposer.org/).
+
 1. Install PHPUnit using composer
 
 ```bash
