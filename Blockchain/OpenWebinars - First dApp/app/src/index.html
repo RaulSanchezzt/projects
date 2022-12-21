@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My first dApp</title>
+  </head>
+  <body>
+    <h1>My first dApp</h1>
+
+    <h2>Select an option</h2>
+    <select name="task" id="task">
+      <option value="1">Save info</option>
+      <option value="2">Consult info</option>
+    </select>
+
+    <div id="saveInfo" style="display: none;">
+      <br /><br />
+      <label for="date">Date: </label>
+      <input type="text" name="date" id="date" />
+      <br /><br />
+      <label for="destination">Destination: </label>
+      <input type="text" name="destination" id="destination" />
+      <br /><br />
+      <label for="price">Price: </label>
+      <input type="text" name="price" id="price" />
+      <br /><br />
+      <button id="saveBtn">
+        Save Info
+      </button>
+    </div>
+
+    <div id="consultInfo" style="display: none;">
+      <br /><br />
+      <label for="consultDate">Date: </label>
+      <input type="text" name="consultDate" id="consultDate" />
+      
+      <br /><br />
+      <button id="consultBtn">
+        Consult Info
+      </button>
+
+      <br /><br />
+      <p id="result">
+
+      </p>
+    </div>
+    
+    <script src="index.js"></script>
+  </body>
+</html>
