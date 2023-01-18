@@ -251,3 +251,108 @@ PostgreSQL init process complete; ready for start up.
 2023-01-17 16:24:43.890 UTC [60] LOG:  checkpoint complete: wrote 43 buffers (0.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=4.027 s, sync=0.030 s, total=4.082 s; sync files=11, longest=0.008 s, average=0.003 s; distance=252 kB, estimate=252 kB
 
 ```
+
+### Searching images CLI
+
+For example, we can search for **Ubuntu** images.
+
+```docker
+$ docker search ubuntu
+NAME                             DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+ubuntu                           Ubuntu is a Debian-based Linux operating sys…   15468     [OK]
+websphere-liberty                WebSphere Liberty multi-architecture images …   291       [OK]
+ubuntu-upstart                   DEPRECATED, as is Upstart (find other proces…   111       [OK]
+neurodebian                      NeuroDebian provides neuroscience research s…   98        [OK]
+ubuntu/nginx                     Nginx, a high-performance reverse proxy & we…   75
+open-liberty                     Open Liberty multi-architecture images based…   56        [OK]
+ubuntu/apache2                   Apache, a secure & extensible open-source HT…   52
+ubuntu-debootstrap               DEPRECATED; use "ubuntu" instead                50        [OK]
+ubuntu/squid                     Squid is a caching proxy for the Web. Long-t…   49
+ubuntu/bind9                     BIND 9 is a very flexible, full-featured DNS…   43
+ubuntu/mysql                     MySQL open source fast, stable, multi-thread…   41
+ubuntu/prometheus                Prometheus is a systems and service monitori…   35
+ubuntu/postgres                  PostgreSQL is an open source object-relation…   23
+ubuntu/kafka                     Apache Kafka, a distributed event streaming …   20
+ubuntu/redis                     Redis, an open source key-value store. Long-…   16
+ubuntu/prometheus-alertmanager   Alertmanager handles client alerts from Prom…   8
+ubuntu/dotnet-deps               Chiselled Ubuntu for self-contained .NET & A…   6
+ubuntu/grafana                   Grafana, a feature rich metrics dashboard & …   6
+ubuntu/memcached                 Memcached, in-memory keyvalue store for smal…   5
+ubuntu/zookeeper                 ZooKeeper maintains configuration informatio…   5
+ubuntu/dotnet-runtime            Chiselled Ubuntu runtime image for .NET apps…   5
+ubuntu/telegraf                  Telegraf collects, processes, aggregates & w…   4
+ubuntu/cortex                    Cortex provides storage for Prometheus. Long…   3
+ubuntu/dotnet-aspnet             Chiselled Ubuntu runtime image for ASP.NET a…   3
+ubuntu/cassandra                 Cassandra, an open source NoSQL distributed …   2
+```
+
+### Renaming a container
+
+What if we want to change the name of a container?
+
+```docker
+$ docker run redis -d
+
+*** FATAL CONFIG FILE ERROR (Redis 7.0.7) ***
+Reading the configuration file, at line 2
+>>> '"-d"'
+Bad directive or wrong number of arguments
+
+$ docker run -d redis
+f34762910e01234d8b3293b274ce975d6e63fdb7d2799d339958d7850cad53ae
+
+$ docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS      NAMES
+f34762910e01   redis     "docker-entrypoint.s…"   4 seconds ago   Up 3 seconds   6379/tcp   relaxed_diffie
+
+$ docker rename f34762910e01 new_redis_container
+
+$ docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS      NAMES
+f34762910e01   redis     "docker-entrypoint.s…"   24 seconds ago   Up 23 seconds   6379/tcp   new_redis_container
+```
+
+### Saving an image
+
+Let's export an image.
+
+```docker
+$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+redis        latest    5f2e708d56aa   7 days ago    117MB
+postgres     latest    9f3ec01f884d   7 days ago    379MB
+ubuntu       latest    6b7dfa7e8fdb   5 weeks ago   77.8MB
+
+~
+$ docker save ubuntu:latest | gzip > myubuntu.tar.gz
+
+$ ls -l
+.rw-r--r-- 30M raul 17 Jan 19:57 myubuntu.tar.gz
+```
+
+### Importing an image
+
+Then, we can import an image we have exported previously.
+
+```docker
+$ docker load < myubuntu.tar.gz
+Loaded image: ubuntu:latest
+
+$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+redis        latest    5f2e708d56aa   7 days ago    117MB
+postgres     latest    9f3ec01f884d   7 days ago    379MB
+ubuntu       latest    6b7dfa7e8fdb   5 weeks ago   77.8MB
+```
+
+### Displaying the resource usage statistics
+
+Finally, we can see the performance in live stream of the containers.
+
+```docker
+$ docker stats
+
+CONTAINER ID   NAME                  CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O   PIDS
+f34762910e01   new_redis_container   0.10%     7.758MiB / 7.616GiB   0.10%     1.23kB / 0B   0B / 0B     5
+
+```
