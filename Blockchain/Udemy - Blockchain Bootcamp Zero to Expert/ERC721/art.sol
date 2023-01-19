@@ -8,12 +8,9 @@ NFT Project:
 4. NFT token with properties
 5. Incremento de las propiedades del Token NFT
 6. Sending of Smart Contract funds to the project owner
-
-REQUISITOS:
-
-1. Compiler version 0.8.0
-2. Use of NFT tokens with the OpenZeppelin project with version 4.4.2
-3. Code in English
+7. Compiler version 0.8.0
+8. Use of NFT tokens with the OpenZeppelin project with version 4.4.2
+9. Code in English
 
 */
 
