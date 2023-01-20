@@ -1,5 +1,5 @@
-import React from "react";
 import NewBudget from "./NewBudget";
+import BudgetControl from "./BudgetControl";
 
 const Header = ({ budget, setBudget, isValidBudget, setIsValidBudget }) => {
   return (
@@ -7,7 +7,7 @@ const Header = ({ budget, setBudget, isValidBudget, setIsValidBudget }) => {
       <h1> Expenses Control </h1>
 
       {isValidBudget ? (
-        <p>Budget Control</p>
+        <BudgetControl budget={budget} />
       ) : (
         <NewBudget
           budget={budget}

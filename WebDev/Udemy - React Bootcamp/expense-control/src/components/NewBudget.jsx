@@ -26,7 +26,7 @@ const NewBudget = ({ budget, setBudget, setIsValidBudget }) => {
             placeholder="Add your Budget"
             type="number"
             value={budget}
-            onChange={(e) => setBudget(e.target.value)}
+            onChange={(e) => setBudget(Number(e.target.value))}
           />
         </div>
         <input type="submit" value="Add" />
