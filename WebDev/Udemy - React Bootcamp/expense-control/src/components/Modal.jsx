@@ -6,7 +6,7 @@ const Modal = ({ setModal, animateModal, setAnimateModal, saveExpense }) => {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
-  const [message, setMessage] = useState("")
+  const [message, setMessage] = useState("");
   const hideModal = () => {
     setAnimateModal(false);
 
@@ -15,27 +15,28 @@ const Modal = ({ setModal, animateModal, setAnimateModal, saveExpense }) => {
     }, 400);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if([ name, amount, category].includes('')) {
-        setMessage('All fields are required')
-        setTimeout(() => {
-            setMessage('')
-        }, 4000);
-        return
+    if ([name, amount, category].includes("")) {
+      setMessage("All fields are required");
+      setTimeout(() => {
+        setMessage("");
+      }, 4000);
+      return;
     }
 
-    saveExpense({name, amount, category})
-  }
+    saveExpense({ name, amount, category });
+  };
   return (
     <div className="modal">
       <div className="close-modal">
         <img src={CloseBtn} alt="Close Button" onClick={hideModal} />
       </div>
 
-      <form 
-      onSubmit={handleSubmit}
-      className={`form ${animateModal ? "animate" : "close"}`}>
+      <form
+        onSubmit={handleSubmit}
+        className={`form ${animateModal ? "animate" : "close"}`}
+      >
         <legend>New Expense</legend>
         {message && <Message type="error">{message}</Message>}
 
@@ -67,11 +68,12 @@ const Modal = ({ setModal, animateModal, setAnimateModal, saveExpense }) => {
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value=""> -- Select -- </option>
-            <option value="savings"> Savings </option>
-            <option value="food"> Food </option>
-            <option value="home"> Home </option>
             <option value="entertainment"> Entertainment </option>
+            <option value="food"> Food </option>
             <option value="health"> Health </option>
+            <option value="home"> Home </option>
+            <option value="other"> Other </option>
+            <option value="savings"> Savings </option>
             <option value="subscriptions"> Subscriptions </option>
           </select>
         </div>
