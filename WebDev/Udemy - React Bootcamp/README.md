@@ -8,9 +8,12 @@ A short review of the [JavaScript](https://www.javascript.com/) language before 
 
 ## [Patient Administrator](./patient-administrator/)
 
-A small project where I have learned about [React](https://reactjs.org/) Hooks and more. This is the [link to the page](https://patient-administrator.netlify.app/).
+A small project where I have learned about [React](https://reactjs.org/) Hooks and more. [Link to the demo page](https://patient-administrator.netlify.app/).
 
-![Demo](./patient-administrator/assets/1.png)
+![Patient Administrator Demo](./patient-administrator/assets/1.png)
 
 ## [Expense Control](./expense-control/)
 
+A great project where I have learned more about [React](https://reactjs.org/) Hooks, *LocalStorage* and other dependencies. [Link to the demo page](https://expenses-control-project.netlify.app/).
+
+![Expense Control Demo](./expense-control/assets/5.png)

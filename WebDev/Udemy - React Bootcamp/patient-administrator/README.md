@@ -44,7 +44,7 @@ Created PostCSS config file: postcss.config.cjs
 
 ## Final result
 
-This is the final result of this project. This is the [link to the page](https://patient-administrator.netlify.app/).
+This is the final result of this project. [Link to the demo page](https://patient-administrator.netlify.app/).
 
 ![](assets/1.png)
 

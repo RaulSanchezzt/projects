@@ -79,7 +79,7 @@ found 0 vulnerabilities
 
 ## Final result
 
-First, define a budget.
+First, define a budget. [Link to the demo page](https://expenses-control-project.netlify.app/).
 
 ![Define a Budget](assets/1.png)
 
@@ -114,3 +114,7 @@ We see that the price has changed and by moving to the left we delete another ex
 At the end we see that the expense has been deleted.
 
 ![Deleted expense](assets/9.png)
+
+---
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/edf2d3bc-9114-414e-9ad9-4412e2ba26e1/deploy-status)](https://app.netlify.com/sites/expenses-control-project/deploys)
