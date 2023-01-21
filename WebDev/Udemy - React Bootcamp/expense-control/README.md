@@ -43,3 +43,36 @@ VITE v4.0.4  ready in 10625 ms
   ➜  Network: use --host to expose
   ➜  press h to show help
 ```
+
+## Installing Dependencies
+
+Then, we are going to install some dependencies using [npm](https://www.npmjs.com/).
+
+```js
+$ npm i react-swipeable-list
+
+added 1 package, and audited 84 packages in 2s
+
+8 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+$ npm i prop-types
+
+added 3 packages, and audited 87 packages in 3s
+
+8 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+$ npm i react-circular-progressbar
+
+added 1 package, and audited 88 packages in 2s
+
+8 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+```
