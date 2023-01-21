@@ -1,6 +1,6 @@
 # Expenses Control
 
-In this case we are using [React](https://reactjs.org/), [Normalize.css](https://necolas.github.io/normalize.css/) and [Google Fonts](https://fonts.google.com/).
+In this case we are using [React](https://reactjs.org/), [Normalize.css](https://necolas.github.io/normalize.css/), [Google Fonts](https://fonts.google.com/) and other dependencies.
 
 ## Creating the project
 
@@ -76,3 +76,41 @@ added 1 package, and audited 88 packages in 2s
 
 found 0 vulnerabilities
 ```
+
+## Final result
+
+First, define a budget.
+
+![Define a Budget](assets/1.png)
+
+Then add a new expense.
+
+![Add a new expense](assets/2.png)
+
+Now add expenses like _Netflix_...
+
+![New expense](assets/3.png)
+
+Filter by the category you want like _Savings_.
+
+![Filter by savings](assets/4.png)
+
+if we spend more than we can afford, we will see that it changes color.
+
+![All Expenses](assets/5.png)
+
+By moving the expense to the right we can edit it.
+
+![Swipe right](assets/6.png)
+
+Change the price of the subscription.
+
+![Edit expense](assets/7.png)
+
+We see that the price has changed and by moving to the left we delete another expense.
+
+![Delete expense](assets/8.png)
+
+At the end we see that the expense has been deleted.
+
+![Deleted expense](assets/9.png)
