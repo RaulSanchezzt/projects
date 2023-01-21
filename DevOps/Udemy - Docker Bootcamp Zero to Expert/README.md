@@ -134,7 +134,7 @@ $ docker ps -a
 CONTAINER ID   IMAGE          COMMAND                  CREATED        STATUS                        PORTS      NAMES
 ```
 
-Then, we can run it with a custom *tag* (name):
+Then, we can run it with a custom _tag_ (name):
 
 ```docker
 $ docker run --name my_ubuntu ubuntu
@@ -355,4 +355,183 @@ $ docker stats
 CONTAINER ID   NAME                  CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O   PIDS
 f34762910e01   new_redis_container   0.10%     7.758MiB / 7.616GiB   0.10%     1.23kB / 0B   0B / 0B     5
 
+```
+
+## Intro to Dockerfile
+
+### Creating an image
+
+Building an image of my app.
+
+```docker
+$ docker build -t my_app .
+[+] Building 128.6s (10/10) FINISHED
+ => [internal] load build definition from Dockerfile                                                               0.1s
+ => => transferring dockerfile: 160B                                                                               0.0s
+ => [internal] load .dockerignore                                                                                  0.1s
+ => => transferring context: 2B                                                                                    0.0s
+ => [internal] load metadata for docker.io/library/node:12.22.1-alpine3.11                                        43.9s
+ => [auth] library/node:pull token for registry-1.docker.io                                                        0.0s
+ => [1/4] FROM docker.io/library/node:12.22.1-alpine3.11@sha256:93b71facf11d471ac035acfaf020ecc05297f6a401781caf  63.5s
+ => => resolve docker.io/library/node:12.22.1-alpine3.11@sha256:93b71facf11d471ac035acfaf020ecc05297f6a401781cafc  0.1s
+ => => sha256:93b71facf11d471ac035acfaf020ecc05297f6a401781cafceae1d0561704ba4 1.43kB / 1.43kB                     0.0s
+ => => sha256:5b8504e22687f25e22254d062558aa18d41d3331b64e771a6a0675e93d357e70 1.16kB / 1.16kB                     0.0s
+ => => sha256:ba59ff60c386d2dc77f7afc5f9211e410ce80e864415c1bafe0006ef76fece1c 6.53kB / 6.53kB                     0.0s
+ => => sha256:ddad3d7c1e96adf9153f8921a7c9790f880a390163df453be1566e9ef0d546e0 2.82MB / 2.82MB                     9.3s
+ => => sha256:8a6a62f4b1f37fb03e07275438ef8fd27a421cd1b0790e57f7dbab0c6328f811 24.60MB / 24.60MB                  62.2s
+ => => sha256:5c72c204eb2261d221bcc8b34dbb4727d6a6625dc7dadf87425c3fa8fd8bbf36 2.24MB / 2.24MB                     5.9s
+ => => sha256:33fce3bc6102e63645ad9b969467728efd17b0cdf8b083b1f505df5af73bd627 281B / 281B                         6.4s
+ => => extracting sha256:ddad3d7c1e96adf9153f8921a7c9790f880a390163df453be1566e9ef0d546e0                          0.1s
+ => => extracting sha256:8a6a62f4b1f37fb03e07275438ef8fd27a421cd1b0790e57f7dbab0c6328f811                          0.7s
+ => => extracting sha256:5c72c204eb2261d221bcc8b34dbb4727d6a6625dc7dadf87425c3fa8fd8bbf36                          0.1s
+ => => extracting sha256:33fce3bc6102e63645ad9b969467728efd17b0cdf8b083b1f505df5af73bd627                          0.0s
+ => [internal] load build context                                                                                  0.5s
+ => => transferring context: 4.62MB                                                                                0.4s
+ => [2/4] WORKDIR /app                                                                                             0.2s
+ => [3/4] COPY . .                                                                                                 0.1s
+ => [4/4] RUN yarn install --production                                                                           19.7s
+ => exporting to image                                                                                             0.9s
+ => => exporting layers                                                                                            0.9s
+ => => writing image sha256:8cb0e8af41969e8474c68da6e8158be95a655d8a8225b9df7695752601b68ef8                       0.0s
+ => => naming to docker.io/library/my_app                                                                          0.0s
+
+Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
+```
+
+Once we have created the image, we can see it listed.
+
+```docker
+$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+my_app       latest    8cb0e8af4196   39 seconds ago   179MB
+redis        latest    5f2e708d56aa   10 days ago      117MB
+postgres     latest    9f3ec01f884d   10 days ago      379MB
+ubuntu       latest    6b7dfa7e8fdb   6 weeks ago      77.8MB
+```
+
+### Running our image
+
+Now we can run a container of my image exposing the port `3000`
+
+```docker
+$ docker run -dp 3000:3000 my_app
+a0aeebe904dbc0f9a2b2924c6a043ffb86b0ef49d380254371779226a52c661b
+```
+
+We can check in the browser that is running on `localhost:3000`!
+
+```docker
+$ docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                    NAMES
+a0aeebe904db   my_app    "docker-entrypoint.s…"   4 minutes ago   Up 4 minutes   0.0.0.0:3000->3000/tcp   quirky_booth
+
+```
+
+### Creating a volume
+
+But if we want to make the data of my app persistent, we have to create a **volume**
+
+```docker
+$ docker volume create todo-db
+todo-db
+```
+
+Then, we have to create a new container connected to my new volume.
+
+```docker
+$ docker run -dp 3000:3000 -v todo-db:/etc/todos my_app
+c8e30553dd6af203317ca2e612dd8b4a6ed57b9e4f373a7c994827082f31824d
+```
+
+Finally, we can see the new container and the volumes created.
+
+```docker
+$ docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS         PORTS                    NAMES
+c8e30553dd6a   my_app    "docker-entrypoint.s…"   10 seconds ago   Up 9 seconds   0.0.0.0:3000->3000/tcp   bold_lederberg
+
+$ docker volume ls
+DRIVER    VOLUME NAME
+local     todo-db
+```
+
+### Modifying the App
+
+What happens when we want to edit the app? In this case we are going to create another volume with the source code and create a new container with two volumes connected.
+
+```docker
+$  docker volume create source
+source
+
+$ docker run -dp 3000:3000 -v todo-db:/etc/todos -v source:/app/src my_app
+6bd6b94b62cfa13b982ee9e1e6ac0b636a69b1def98a2df23e7a3b244ade3a44
+```
+
+Now we can edit our app in production! :D
+
+### Publish on Docker Hub
+
+Finally, we are going to upload the final image to [Docker Hub](https://hub.docker.com/). Let's build the image again.
+
+```docker
+$ docker build -t my_app:v2 .
+[+] Building 44.5s (10/10) FINISHED
+ => [internal] load build definition from Dockerfile                                                               0.1s
+ => => transferring dockerfile: 160B                                                                               0.0s
+ => [internal] load .dockerignore                                                                                  0.1s
+ => => transferring context: 2B                                                                                    0.0s
+ => [internal] load metadata for docker.io/library/node:12.22.1-alpine3.11                                        43.7s
+ => [auth] library/node:pull token for registry-1.docker.io                                                        0.0s
+ => [1/4] FROM docker.io/library/node:12.22.1-alpine3.11@sha256:93b71facf11d471ac035acfaf020ecc05297f6a401781cafc  0.0s
+ => [internal] load build context                                                                                  0.5s
+ => => transferring context: 7.98kB                                                                                0.5s
+ => CACHED [2/4] WORKDIR /app                                                                                      0.0s
+ => CACHED [3/4] COPY . .                                                                                          0.0s
+ => CACHED [4/4] RUN yarn install --production                                                                     0.0s
+ => exporting to image                                                                                             0.0s
+ => => exporting layers                                                                                            0.0s
+ => => writing image sha256:8cb0e8af41969e8474c68da6e8158be95a655d8a8225b9df7695752601b68ef8                       0.0s
+ => => naming to docker.io/library/my_app:v2                                                                       0.0s
+
+Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
+```
+
+Let's list the images.
+
+```docker
+$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED             SIZE
+my_app       v2        8cb0e8af4196   About an hour ago   179MB
+redis        latest    5f2e708d56aa   10 days ago         117MB
+postgres     latest    9f3ec01f884d   10 days ago         379MB
+ubuntu       latest    6b7dfa7e8fdb   6 weeks ago         77.8MB
+```
+
+Then, we have to create a tag to this version.
+
+```docker
+$ docker tag 8cb0e8af4196 raulsanchezzt/my_app:v2
+
+$docker images
+REPOSITORY             TAG       IMAGE ID       CREATED             SIZE
+my_app                 v2        8cb0e8af4196   About an hour ago   179MB
+raulsanchezzt/my_app   v2        8cb0e8af4196   About an hour ago   179MB
+redis                  latest    5f2e708d56aa   10 days ago         117MB
+postgres               latest    9f3ec01f884d   10 days ago         379MB
+ubuntu                 latest    6b7dfa7e8fdb   6 weeks ago         77.8MB
+```
+
+Finally, push the image to **Docker Hub**.
+
+```docker
+$ docker push raulsanchezzt/my_app:v2
+The push refers to repository [docker.io/raulsanchezzt/my_app]
+5e2c4a0714c1: Pushed
+cd85639aa011: Pushed
+fe3f4fe648a3: Pushed
+de74bd1e76e0: Mounted from library/node
+62ec5c862704: Mounted from library/node
+0b9cfd251a3b: Mounted from library/node
+9a5d14f9f550: Mounted from library/node
+v2: digest: sha256:8bf76769926a66603019f526fe8c10c827c7c30963cc9ea32097fead8ac4e510 size: 1787
 ```
