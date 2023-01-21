@@ -98,6 +98,7 @@ function App() {
   return (
     <div className={modal ? "fix" : ""}>
       <Header
+        setExpenses={setExpenses}
         expenses={expenses}
         budget={budget}
         setBudget={setBudget}
