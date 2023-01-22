@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import Form from "./components/Form";
+import Result from "./components/Result";
 import CryptoImage from "./img/background-image.png";
 
 const Container = styled.div`
@@ -41,12 +42,31 @@ const Heading = styled.h1`
 `;
 
 function App() {
+  const [coins, setCoins] = useState({});
+  const [result, setResult] = useState({});
+
+  useEffect(() => {
+    if (Object.keys(coins).length > 0) {
+      const calcCrypto = async () => {
+        const { coin, crypto } = coins;
+        const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${crypto}&tsyms=${coin}`;
+        const answer = await fetch(url);
+        const result = await answer.json();
+
+        setResult(result.DISPLAY[crypto][coin]);
+      };
+
+      calcCrypto();
+    }
+  }, [coins]);
+
   return (
     <Container>
       <Image src={CryptoImage} alt="Crypto Background" />
       <div>
         <Heading>Crypto Prices</Heading>
-        <Form></Form>
+        <Form setCoins={setCoins} />
+        {result && result.PRICE && <Result result={result}/>}
       </div>
     </Container>
   );

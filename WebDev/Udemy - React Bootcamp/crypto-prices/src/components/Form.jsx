@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
+import Error from "./Error";
 import useSelectCoins from "../hooks/useSelectCoins";
 import { currencies } from "../data/currencies";
 
@@ -21,8 +22,10 @@ const InputSubmit = styled.input`
   }
 `;
 
-const Form = () => {
+const Form = ({setCoins}) => {
   const [cryptos, setCryptos] = useState([]);
+  const [error, setError] = useState(false);
+
   const [coin, SelectCoins] = useSelectCoins("Currency", currencies);
   const [crypto, SelectCrypto] = useSelectCoins("Crypto", cryptos);
 
@@ -47,13 +50,29 @@ const Form = () => {
     queryAPI();
   }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if ([coin, crypto].includes("")) {
+      setError(true);
+      return;
+    }
+
+    setError(false)
+    setCoins({
+      coin,
+      crypto
+    })
+  };
+
   return (
-    <form>
-      <SelectCoins />
-      {coin}
-      <SelectCrypto />
-      <InputSubmit type="submit" value="Convert" />
-    </form>
+    <>
+      {error && <Error>All fields are required</Error>}
+      <form onSubmit={handleSubmit}>
+        <SelectCoins />
+        <SelectCrypto />
+        <InputSubmit type="submit" value="Convert" />
+      </form>
+    </>
   );
 };
 
