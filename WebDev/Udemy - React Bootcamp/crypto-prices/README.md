@@ -59,3 +59,7 @@ All fields are required to continue...
 In this case we are comparing Solana to USD.
 
 ![Current Solana price](assets/3.png)
+
+---
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4230b091-15cb-4c3e-95ce-1e8d19709562/deploy-status)](https://app.netlify.com/sites/crypto-prices-converter/deploys)
