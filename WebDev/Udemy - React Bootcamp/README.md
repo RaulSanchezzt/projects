@@ -20,6 +20,6 @@ A great project where I have learned more about [React](https://reactjs.org/) Ho
 
 ## [Crypto Prices](./crypto-prices/)
 
-A project where I use **React Custom Hooks**, _fetch API_, **Styled Components**... to see the price of Crypto in various currencies.
+A project where I use **React Custom Hooks**, _fetch API_, **Styled Components**... to see the price of Crypto in various currencies. [Link to the demo page](https://crypto-prices-converter.netlify.app/).
 
 ![Crypto Prices Demo](./crypto-prices//assets/3.png)
