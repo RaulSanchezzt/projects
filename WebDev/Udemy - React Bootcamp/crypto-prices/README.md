@@ -50,7 +50,7 @@ found 0 vulnerabilities
 
 First, you have to select a currency and a crypto. [Link to the demo page](https://crypto-prices-converter.netlify.app/).
 
-![Select a currency and a crypto](/assets/1.png)
+![Select a currency and a crypto](assets/1.png)
 
 All fields are required to continue...
 
