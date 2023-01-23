@@ -14,6 +14,12 @@ A small project where I have learned about [React](https://reactjs.org/) Hooks a
 
 ## [Expense Control](./expense-control/)
 
-A great project where I have learned more about [React](https://reactjs.org/) Hooks, *LocalStorage* and other dependencies. [Link to the demo page](https://expenses-control-project.netlify.app/).
+A great project where I have learned more about [React](https://reactjs.org/) Hooks, _LocalStorage_ and other dependencies. [Link to the demo page](https://expenses-control-project.netlify.app/).
 
 ![Expense Control Demo](./expense-control/assets/5.png)
+
+## [Crypto Prices](./crypto-prices/)
+
+A project where I use **React Custom Hooks**, _fetch API_, **Styled Components**... to see the price of Crypto in various currencies.
+
+![Crypto Prices Demo](./crypto-prices//assets/3.png)
