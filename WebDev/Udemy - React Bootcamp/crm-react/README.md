@@ -67,3 +67,40 @@ added 8 packages, and audited 9 packages in 25s
 
 found 0 vulnerabilities
 ```
+
+## Creating a REST API
+
+Using JSON Server
+
+```js
+$ npm install -g json-server
+
+added 109 packages, and audited 110 packages in 10s
+
+10 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+```
+
+Starting JSON Server
+
+```js
+$ json-server --watch db.json
+
+  \{^_^}/ hi!
+
+  Loading db.json
+  Done
+
+  Resources
+  http://localhost:3000/clients
+
+  Home
+  http://localhost:3000
+
+  Type s + enter at any time to create a snapshot of the database
+  Watching...
+
+GET /clients 200 3.921 ms - 586
+```
