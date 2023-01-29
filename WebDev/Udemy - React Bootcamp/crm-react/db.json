@@ -1,39 +1,36 @@
 {
   "clients": [
     {
-      "id": 1,
-      "name": "Juan",
-      "phone": 102013313,
-      "email": "juan@juan.com",
-      "job": "Tesla"
+      "name": "John Doe",
+      "job": "Actor",
+      "email": "john@doe.com",
+      "phone": "025021953",
+      "notes": "American comedy-drama film directed and produced by Frank Capra, written by Robert Riskin, and starring Gary Cooper and Barbara Stanwyck.",
+      "id": 1
     },
     {
-      "id": 2,
-      "name": "Karen",
-      "phone": 138198313,
-      "email": "karen@juan.com",
-      "job": "Apple"
+      "name": "Satoshi Nakamoto",
+      "job": "Bitcoin",
+      "email": "satoshin@gmx.com",
+      "phone": "03012001",
+      "notes": "Person or persons who developed bitcoin, authored the bitcoin white paper, and created and deployed bitcoin's original reference implementation. As part of the implementation, Nakamoto also devised the first blockchain database.",
+      "id": 2
     },
     {
-      "id": 3,
-      "name": "Josue",
-      "phone": 31983913,
-      "email": "josue@juan.com",
-      "job": "Meta"
+      "name": "Harvey Specter",
+      "job": "Managing Partner",
+      "email": "harvey@specter.com",
+      "phone": "011122011",
+      "notes": "My whole life, I've done what I think was right, but there's always someone somewhere who hates me for it because they think I'm breaking the rules. Well, rules aren't right or wrong. Every line I've ever crossed, I'd do it again because I am fine with what's in my soul.",
+      "id": 3
     },
     {
-      "id": 4,
-      "name": "Miguel",
-      "phone": 319381983,
-      "email": "miguel@juan.com",
-      "job": "Twitter"
-    },
-    {
-      "id": 5,
-      "name": "Pedro",
-      "phone": 1398198938,
-      "email": "pedro@juan.com",
-      "job": "MSI"
+      "name": "Jim Halpert",
+      "job": "Dunder Mifflin",
+      "email": "jim@halpert.com",
+      "phone": "027052016",
+      "notes": "Sales representative at the Scranton branch of paper distribution company Dunder Mifflin.",
+      "id": 4
     }
   ]
 }
