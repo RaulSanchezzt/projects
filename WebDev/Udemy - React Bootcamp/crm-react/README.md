@@ -113,7 +113,7 @@ GET /clients 200 3.921 ms - 586
 
 ## Final result
 
-First, make sure you **JSON Server** is running. We'll see there are no clients yet...
+First, make sure you **JSON Server** is running. We'll see there are no clients yet... [Link to the demo page](https://customer-relationship-management.netlify.app/)
 
 ![No clients yet](assets/1.png)
 
@@ -128,3 +128,7 @@ Now we will see our clients.
 Finally, we can edit the client or delete it.
 
 ![Edit or delete the client](assets/4.png)
+
+---
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f245aee7-1839-45f9-a666-36fd82f6af55/deploy-status)](https://app.netlify.com/sites/customer-relationship-management/deploys)
