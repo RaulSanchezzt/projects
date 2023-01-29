@@ -22,4 +22,11 @@ A great project where I have learned more about [React](https://reactjs.org/) Ho
 
 A project where I use **React Custom Hooks**, _fetch API_, **Styled Components**... to see the price of Crypto in various currencies. [Link to the demo page](https://crypto-prices-converter.netlify.app/).
 
-![Crypto Prices Demo](./crypto-prices//assets/3.png)
+![Crypto Prices Demo](./crypto-prices/assets/3.png)
+
+
+## [Customer Relationship Management](./crm-react/)
+
+A project where I use [React Router DOM](https://reactrouter.com/en/main), [Tailwind CSS](https://tailwindcss.com/), and [JSON Server](https://www.npmjs.com/package/json-server) to create a **CRM** with different pages. [Link to the demo page](https://customer-relationship-management.netlify.app/)
+
+![CRM Demo](./crm-react/assets/3.png)
