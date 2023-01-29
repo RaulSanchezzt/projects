@@ -1,4 +1,4 @@
-// import { useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { getClients } from "../data/Clients";
 import Client from "../components/Client";
 
