@@ -43,7 +43,7 @@ export async function updateClient(id, data) {
 export async function deleteClient(id) {
   try {
     const answer = await fetch(`${import.meta.env.VITE_API_URL}/${id}`, {
-      method: "DELETE"
+      method: "DELETE",
     });
     await answer.json();
   } catch (error) {

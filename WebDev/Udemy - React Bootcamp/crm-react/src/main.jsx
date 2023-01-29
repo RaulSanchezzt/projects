@@ -38,7 +38,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/clients/:clientId/delete",
-        action: deleteClientAction
+        action: deleteClientAction,
       },
     ],
   },
