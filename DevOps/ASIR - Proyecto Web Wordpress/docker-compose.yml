@@ -1,0 +1,56 @@
+version: '3.1'
+services:
+  wordpress:
+    image: wordpress
+    depends_on:
+      - mysql
+    container_name: Wordpress
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: mywordpress
+      WORDPRESS_DB_PASSWORD: mywordpress
+      WORDPRESS_DB_NAME: mywordpress
+    volumes:
+      - wordpress-web-data:/var/www/html
+    networks:
+      - proyecto-web-wordpress
+
+  mysql:
+    image: mysql:5.7
+    container_name: MySQL
+    restart: always
+    environment:
+      MYSQL_DATABASE: mywordpress
+      MYSQL_USER: mywordpress
+      MYSQL_PASSWORD: mywordpress
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - wordpress-db-data:/var/lib/mysql
+    networks:
+      - proyecto-web-wordpress
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mysql
+    container_name: PHPMyAdmin
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_PASSWORD: root
+    networks:
+      - proyecto-web-wordpress
+
+volumes:
+  wordpress-web-data:
+  wordpress-db-data:
+
+
+networks:
+  proyecto-web-wordpress:
+    driver: bridge
