@@ -1,0 +1,52 @@
+version: '3.1'
+services:
+  odoo:
+    image: odoo:14.0
+    depends_on:
+      - postgresql
+    container_name: Odoo
+    environment:
+      HOST: postgresql
+    restart: always
+    ports:
+      - 80:8069
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+    networks:
+      - proyecto-web-odoo
+
+  postgresql:
+    image: postgres:13
+    container_name: PostgreSQL
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: odoo
+      POSTGRES_USER: odoo
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
+    networks:
+      - proyecto-web-odoo
+
+  phppgadmin:
+    image: bitnami/phppgadmin
+    depends_on:
+      - postgresql
+    container_name: PHPPgAdmin
+    ports:
+      - 8080:8080
+      - 443:8443
+    environment:
+      - DATABASE_SSL_MODE=disable
+    networks:
+      - proyecto-web-odoo
+
+volumes:
+  odoo-web-data:
+  odoo-db-data:
+
+
+networks:
+  proyecto-web-odoo:
+    driver: bridge
