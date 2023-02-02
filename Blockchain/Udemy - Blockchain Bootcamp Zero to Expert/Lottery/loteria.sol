@@ -63,6 +63,48 @@ contract loteria is ERC20, Ownable {
     function usersInfo(address _account) public view returns (address) {
         return usuario_contract[_account];
     }
+
+    // Compra de tokens ERC-20
+    function compraTokens(uint256 _numTokens) public payable {
+        // Registro del usuario
+        if (usuario_contract[msg.sender] == address(0)) {
+            registrar();
+        }
+        // Establecimiento del coste de los tokens a comprar
+        uint256 coste = precioTokens(_numTokens);
+        // Evaluacion del dinero que el cliente paga por los tokens
+        require(
+            msg.value >= coste,
+            "Compra menos tokens o paga con mas ethers"
+        );
+        // Obtencion del numero de tokens disponibles
+        uint256 balance = balanceTokensSC();
+        require(_numTokens <= balance, "Compra un numero menor de tokens");
+        // Devolucion del dinero sobrante
+        uint256 returnValue = msg.value - coste;
+        // El Smart Contract devuelve la cantidad restante
+        payable(msg.sender).transfer(returnValue);
+        // Envio de los tokens al cliente/usuario
+        _transfer(address(this), msg.sender, _numTokens);
+    }
+
+    // Devolucion de tokens al Smart Contract
+    function devolverTokens(uint _numTokens) public payable {
+        // El numero de tokens debe ser mayor a 0
+        require(
+            _numTokens > 0,
+            "Necesitas devolver un numero de tokens mayor a 0"
+        );
+        // El usuario debe acreditar tener los tokens que quiere devolver
+        require(
+            _numTokens <= balanceTokens(msg.sender),
+            "No tienes los tokens que deseas devolver"
+        );
+        // El usuario transfiere los tokens al Smart Contract
+        _transfer(msg.sender, address(this), _numTokens);
+        // El Smart Contract envia los ethers al usuario
+        payable(msg.sender).transfer(precioTokens(_numTokens));
+    }
 }
 
 // Smart Contract de NFTs
