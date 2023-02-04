@@ -4,8 +4,8 @@ include dirname( dirname( dirname( __FILE__))) . "/common/utils.php";
 include dirname( dirname( dirname( __FILE__))) . "/common/config.php";
 include dirname( dirname( dirname( __FILE__))) . "/common/mysql.php";
 
-debug($_POST);
-debug($_FILES);
+// debug($_POST);
+// debug($_FILES);
 
 $user_id = $_POST['user_id'];
 $name = $_POST['name'];

@@ -37,10 +37,8 @@ Close($connection);
 </head>
 
 <body>
-    <!-- Navbar: https://startbootstrap.com/snippets/full-slider -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <!--Artist Palette icon by Icons8 https://icons8.com/icon/lOvhiSMwKCwC/artist-palette -->
             <a class="navbar-brand" href="#"><img src="https://img.icons8.com/emoji/48/null/artist-palette.png" /></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -58,7 +56,6 @@ Close($connection);
         </div>
     </nav>
     <div class="container">
-        <!-- Content: https://startbootstrap.com/snippets/thumbnail-gallery -->
         <h1 class="fw-light text-center text-lg-start mt-4 mb-0">Gallery</h1>
 
         <hr class="mt-2 mb-5">
@@ -66,13 +63,15 @@ Close($connection);
         <div class="row text-center text-lg-start">
 
             <?php
-            foreach ($rows as $row) {
-                echo '<div class="col-lg-3 col-md-4 col-6">
+            if (is_iterable($rows)) {
+                foreach ($rows as $row) {
+                    echo '<div class="col-lg-3 col-md-4 col-6">
                   <a class="d-block mb-4" href="#">
                       <img class="img-fluid img-thumbnail" src="images/' . $row['file'] . '""">
                       
                   </a>' . $row['name'] . '
               </div>';
+                }
             }
             ?>
 

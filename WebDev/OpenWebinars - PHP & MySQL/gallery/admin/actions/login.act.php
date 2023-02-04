@@ -23,7 +23,7 @@ Close($connection);
 // debug($rows);
 
 if (empty($rows)) {
-    header("location: ../errror.php?error=1");
+    header("location: ../error.php?error=1");
 } else {
     session_start();
     $_SESSION['id'] = $rows[0]['id'];

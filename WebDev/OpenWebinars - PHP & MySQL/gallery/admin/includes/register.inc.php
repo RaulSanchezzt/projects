@@ -28,10 +28,6 @@
 </head>
 
 <body>
-    <!-- Register: https://startbootstrap.com/snippets/registration-page -->
-
-    <!-- This snippet uses Font Awesome 5 Free as a dependency. You can download it at fontawesome.io! -->
-
     <div class="container">
         <div class="row">
             <div class="col-lg-10 col-xl-9 mx-auto">
@@ -48,12 +44,12 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com" name="mail">
+                                <input type="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com" name="mail" required>
                                 <label for="floatingInputEmail">Email address</label>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
                                 <label for="floatingPassword">Password</label>
                             </div>
 
