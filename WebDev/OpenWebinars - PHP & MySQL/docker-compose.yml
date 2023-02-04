@@ -1,0 +1,38 @@
+version: "3.1"
+services:
+    db:
+        image: mysql
+        container_name: MySQL
+        ports:
+            - "3306:3306"
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_DATABASE: gallery
+            MYSQL_USER: dev
+            MYSQL_PASSWORD: dev
+            MYSQL_ROOT_PASSWORD: root
+        volumes:
+            - proyecto-web-php-mysql:/var/lib/mysql
+    www:
+        build: gallery/.
+        container_name: WWW
+        ports:
+            - "80:80"
+        volumes:
+            - ./gallery:/var/www/html/gallery
+            - ./gallery/images:/var/www/html/gallery/images
+        links:
+            - db
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: PHPMyAdmin
+        links:
+            - db:db
+        ports:
+            - 8000:80
+        environment:
+            MYSQL_USER: dev
+            MYSQL_PASSWORD: dev
+            MYSQL_ROOT_PASSWORD: root
+volumes:
+    proyecto-web-php-mysql:
