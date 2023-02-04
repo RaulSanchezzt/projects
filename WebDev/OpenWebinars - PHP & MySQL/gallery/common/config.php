@@ -2,12 +2,11 @@
 
 $config = array(
     'database' => array(
-        'host' => 'localhost',
-        'username' => 'devuser',
-        'password' => 'test1234',
-        'database' => 'GALLERY',
+        'host' => 'db',
+        // 'host' => 'localhost',
+        'username' => 'dev',
+        'password' => 'dev',
+        'database' => 'gallery',
         'encoding' => 'utf8',
     )
     );
-
-?>
