@@ -4,7 +4,7 @@ In this [course](https://openwebinars.net/academia/portada/php-mysql/) I have le
 
 ## Introduction
 
-### Install PHP, Apache2 & MariaDB
+### Install PHP, Apache2 & MariaDB in Local
 
 I installed all on **Ubuntu** using [WSL](https://github.com/RaulSanchezzt/dotfiles/tree/wsl).
 
@@ -64,6 +64,25 @@ $ sudo service mariadb start
 ```
 
 Finally, start a **PHP** server using this [extension](https://marketplace.visualstudio.com/items?itemName=brapifra.phpserver) in **VSCode** and import the **databases** using the **SQL** scripts in ``phpmyadmin``.
+
+## Using Docker
+
+First, create and start containers of this project.
+
+```docker
+$ docker compose up -d
+[+] Running 5/5
+ ⠿ Network openwebinars-phpmysql_default      Created                                                              0.0s
+ ⠿ Volume "openwebinars-phpmysql_persistent"  Created                                                              0.0s
+ ⠿ Container MySQL                            Started                                                              0.8s
+ ⠿ Container WWW                              Started                                                              1.5s
+ ⠿ Container PHPMyAdmin                       Started                                                              1.6s
+```
+
+Then go to `phpmyadmin` searching in the browser `http://localhost:8000/` and run the scripts to create the tables in the **gallery database**.
+
+Finally, go to the web page located in `http://localhost/gallery/`.
+
 
 ## Gallery
 
