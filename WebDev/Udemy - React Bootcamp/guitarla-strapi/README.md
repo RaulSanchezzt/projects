@@ -120,3 +120,9 @@ This is the final result of the configuration. First, log in with the user you'v
 ![Courses](assets/4.png)
 
 The, add some content.
+
+![Guitars](assets/5.png)
+
+![Posts](assets/6.png)
+
+![Courses](assets/7.png)
