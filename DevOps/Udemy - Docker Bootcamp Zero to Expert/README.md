@@ -535,3 +535,21 @@ de74bd1e76e0: Mounted from library/node
 9a5d14f9f550: Mounted from library/node
 v2: digest: sha256:8bf76769926a66603019f526fe8c10c827c7c30963cc9ea32097fead8ac4e510 size: 1787
 ```
+
+## Intro to Docker Compose
+
+Now we are going to create two different containers: One for the app and the other to the database. We can do it using a long command but instead we are going to use [Docker Compose](https://docs.docker.com/get-started/08_using_compose/). Let's create a new file named `docker-compose.yaml` in the `multi-container` directory to define the services we need in a single command.
+
+```docker
+$ cd multi-container/
+
+$ ls
+todo-app-mysql  docker-compose.yml
+
+$ docker compose up -d
+[+] Running 2/0
+ ⠿ Container multi-container-app-1  Running                                                                        0.0s
+ ⠿ Container multi-container-db-1   Running
+```
+
+Then just execute the command to start the containers and it's done!.

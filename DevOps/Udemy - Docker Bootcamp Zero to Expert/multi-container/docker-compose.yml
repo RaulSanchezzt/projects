@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+
+  app:
+    image: my_app:v2
+    ports:
+      - 3000:3000
+    environment:
+      MYSQL_HOST: db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: todos
+
+  db:
+    image: mysql:5.7
+    volumes:
+      - ./todo-app-mysql:/var/lib/mysql/
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todos
