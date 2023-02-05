@@ -30,3 +30,7 @@ A project where I use **React Custom Hooks**, _fetch API_, **Styled Components**
 A project where I use [React Router DOM](https://reactrouter.com/en/main), [Tailwind CSS](https://tailwindcss.com/), and [JSON Server](https://www.npmjs.com/package/json-server) to create a **CRM** with different pages. [Link to the demo page](https://customer-relationship-management.netlify.app/)
 
 ![CRM Demo](./crm-react/assets/3.png)
+
+## [GuitarLA Strapi](./guitarla-strapi/)
+
+A project where I created a **REST API** using [strapi](https://strapi.io/), [render](https://render.com) and [Cloudinary](https://cloudinary.com/) to make the backend for futures projects.
