@@ -8,7 +8,7 @@ services:
     container_name: Wordpress
     restart: always
     ports:
-      - 80:80
+      - 8008:80
     environment:
       WORDPRESS_DB_HOST: mysql
       WORDPRESS_DB_USER: mywordpress
@@ -49,7 +49,7 @@ services:
 
   # Odoo - PostgreSQL - PHPPgAdmin
   odoo:
-    image: odoo:14.0
+    image: odoo:14
     depends_on:
       - postgresql
     container_name: Odoo
@@ -84,11 +84,23 @@ services:
     container_name: PHPPgAdmin
     ports:
       - 8888:8080
-      - 443:8443
+      - 8443:8443
     environment:
       - DATABASE_SSL_MODE=disable
     networks:
       - proyecto-web-casero
+
+  ssl:
+    image: jc21/nginx-proxy-manager
+    ports:
+      - "80:80"
+      - "443:443"
+      - "81:81"
+    restart: always
+    container_name: ssl
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
 
 volumes:
   wordpress-web-data:
