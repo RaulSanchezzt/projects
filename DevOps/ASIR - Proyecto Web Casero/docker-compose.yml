@@ -101,6 +101,8 @@ services:
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
+    networks:
+      - proyecto-web-casero
 
 volumes:
   wordpress-web-data:
