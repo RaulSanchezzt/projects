@@ -4,8 +4,6 @@ En este proyecto, vamos a utilizar una máquina virtual con [Ubuntu Server](http
 
 ## Máquina Virtual
 
-### Instalación
-
 Lo primero que tendremos que hacer será crear una máquina virtual con suficientes recursos para nuestro objetivo.
 
 ![](assets/1.png)
@@ -29,7 +27,6 @@ raul@ubuntu-proyecto-web:~$ sudo nano /etc/netplan/00-installer-config.yaml
 Escribimos la configuración necesaria...
 
 ```yaml
-# This is the network config written by 'subiquity'
 network:
   ethernets:
     ens33:
@@ -49,7 +46,7 @@ Después de guardar el archivo, aplicamos la configuración con el siguiente com
 raul@ubuntu-proyecto-web:~$ sudo netplan apply
 ```
 
-Reiniciamos la máquina y comprobamos que nos podemos conectar mediante **SSH** desde otro equipo.
+Reiniciamos y comprobamos que nos podemos conectar mediante **SSH**.
 
 ![](assets/4.png)
 
@@ -82,22 +79,17 @@ raul@ubuntu-proyecto-web:~$ sudo apt-get install \
 Leyendo lista de paquetes... Hecho
 Creando árbol de dependencias... Hecho
 Leyendo la información de estado... Hecho
-lsb-release ya está en su versión más reciente (11.1.0ubuntu4).
-fijado lsb-release como instalado manualmente.
-ca-certificates ya está en su versión más reciente (20211016ubuntu0.22.04.1).
-fijado ca-certificates como instalado manualmente.
-curl ya está en su versión más reciente (7.81.0-1ubuntu1.7).
-fijado curl como instalado manualmente.
 gnupg ya está en su versión más reciente (2.2.27-3ubuntu2.1).
 fijado gnupg como instalado manualmente.
 Los paquetes indicados a continuación se instalaron de forma automática y ya no son necesarios.
   libflashrom1 libftdi1-2
 Utilice «sudo apt autoremove» para eliminarlos.
-0 actualizados, 0 nuevos se instalarán, 0 para eliminar y 4 no actualizados.
+0 actualizados, 0 nuevos se instalarán, 0 para eliminar y 4 no actualizados.lmente.
 
 raul@ubuntu-proyecto-web:~$ sudo mkdir -p /etc/apt/keyrings
 
 raul@ubuntu-proyecto-web:~$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
 raul@ubuntu-proyecto-web:~$ echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
@@ -109,10 +101,6 @@ Ahora actualizamos los repositorios e instalamos...
 raul@ubuntu-proyecto-web:~$ sudo apt-get update
 Des:1 https://download.docker.com/linux/ubuntu jammy InRelease [48,9 kB]
 Des:2 https://download.docker.com/linux/ubuntu jammy/stable amd64 Packages [12,7 kB]
-Obj:3 http://archive.ubuntu.com/ubuntu jammy InRelease
-Des:4 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [114 kB]
-Des:5 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [107 kB]
-Des:6 http://archive.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
 Descargados 393 kB en 5s (75,9 kB/s)
 Leyendo lista de paquetes... Hecho
 
@@ -143,7 +131,7 @@ raul@ubuntu-proyecto-web:~$ docker ps
 permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/json": dial unix /var/run/docker.sock: connect: permission denied
 ```
 
-Una solución sería usar _docker_ con el usuario `root` o, en este caso vamos a añadir al usuario actual al grupo. Después reiniciaremos y nos sacará de nuestra sesión **SSH**...
+Una solución sería usar _docker_ con el usuario **root** o, en este caso vamos a añadir al usuario actual al grupo. Después reiniciaremos y nos sacará de nuestra sesión **SSH**...
 
 ```bash
 raul@ubuntu-proyecto-web:~$ sudo usermod -a -G docker $USER
@@ -154,40 +142,42 @@ Connection to 192.168.1.222 closed.
 
 ### Crear Contenedores
 
-Ahora, crearemos una nueva carpeta y crearemos el archivo `docker-compose.yml` dónde copiaremos el contenido. Luego lo ejecutaremos y esperamos a que termine...
+Ahora, crearemos una nueva carpeta y crearemos el archivo **docker-compose.yml** dónde copiaremos el contenido. Luego lo ejecutaremos y esperamos a que termine...
 
 ```bash
 raul@ubuntu-proyecto-web:~$ mkdir proyecto-web-casero
+
 raul@ubuntu-proyecto-web:~$ cd proyecto-web-casero/
+
 raul@ubuntu-proyecto-web:~/proyecto-web-casero$ vim docker-compose.yml
+
 raul@ubuntu-proyecto-web:~/proyecto-web-casero$ docker compose up -d
 [+] Running 11/11
- ⠿ Network proyecto-web-casero_proyecto-web-casero  Created                                                        0.1s
- ⠿ Volume "proyecto-web-casero_wordpress-db-data"   Created                                                        0.0s
- ⠿ Volume "proyecto-web-casero_odoo-web-data"       Created                                                        0.0s
- ⠿ Volume "proyecto-web-casero_odoo-db-data"        Created                                                        0.0s
- ⠿ Volume "proyecto-web-casero_wordpress-web-data"  Created                                                        0.0s
- ⠿ Container MySQL                                  Started                                                        4.0s
- ⠿ Container PostgreSQL                             Started                                                        4.0s
- ⠿ Container PHPPgAdmin                             Started                                                        8.1s
- ⠿ Container Odoo                                   Started                                                        4.8s
- ⠿ Container Wordpress                              Started                                                        8.0s
- ⠿ Container PHPMyAdmin                             Started                                                        8.0s
+ ⠿ Network proyecto-web-casero_proyecto-web-casero  Created 0.1s
+ ⠿ Volume "proyecto-web-casero_wordpress-db-data"   Created 0.0s
+ ⠿ Volume "proyecto-web-casero_odoo-web-data"       Created 0.0s
+ ⠿ Volume "proyecto-web-casero_odoo-db-data"        Created 0.0s
+ ⠿ Volume "proyecto-web-casero_wordpress-web-data"  Created 0.0s
+
+ ⠿ Container MySQL                                  Started 4.0s
+ ⠿ Container PostgreSQL                             Started 4.0s
+ ⠿ Container PHPPgAdmin                             Started 8.1s
+ ⠿ Container Odoo                                   Started 4.8s
+ ⠿ Container Wordpress                              Started 8.0s
+ ⠿ Container PHPMyAdmin                             Started 8.0s
 ```
 
 Ahora podemos ver los contenedores que tenemos corriendo...
 
 ```docker
 raul@ubuntu-proyecto-web:~/proyecto-web-casero$ docker ps
-CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS
-                                                              NAMES
-34a69e1eedf3   wordpress               "docker-entrypoint.s…"   16 minutes ago   Up 16 minutes   0.0.0.0:80->80/tcp, :::80->80/tcp                                                    Wordpress
-9e3556454c52   phpmyadmin/phpmyadmin   "/docker-entrypoint.…"   16 minutes ago   Up 16 minutes   0.0.0.0:8080->80/tcp, :::8080->80/tcp                                                PHPMyAdmin
-997b6b895b32   bitnami/phppgadmin      "/opt/bitnami/script…"   16 minutes ago   Up 16 minutes   0.0.0.0:8888->8080/tcp, :::8888->8080/tcp, 0.0.0.0:443->8443/tcp, :::443->8443/tcp   PHPPgAdmin
-fbe5337790ad   odoo:14.0               "/entrypoint.sh odoo"    16 minutes ago   Up 16 minutes   8071-8072/tcp, 0.0.0.0:88->8069/tcp, :::88->8069/tcp                                 Odoo
-1d4cc5b14e89   postgres:13             "docker-entrypoint.s…"   16 minutes ago   Up 16 minutes   5432/tcp
-                                                              PostgreSQL
-96cfc3eb9807   mysql:5.7               "docker-entrypoint.s…"   16 minutes ago   Up 16 minutes   3306/tcp, 33060/tcp                                                                  MySQL
+CONTAINER ID    IMAGE                    PORTS                NAME
+34a69e1eedf3    wordpress                8008/tcp             Wordpress
+9e3556454c52    phpmyadmin/phpmyadmin    8080/tcp             PHPMyAdmin
+997b6b895b32    bitnami/phppgadmin       8888/tcp             PHPPgAdmin
+fbe5337790ad    odoo:14.0                88/tcp               Odoo
+1d4cc5b14e89    postgres:13              5432/tcp             PostgreSQL
+96cfc3eb9807    mysql:5.7                3306/tcp, 33060/tcp  MySQL
 ```
 
 ## Configuración
@@ -202,7 +192,7 @@ Introducimos la información necesaria para que nuestro sitio web funcione.
 
 ![](assets/6.png)
 
-No tendremos que indicar ni configurar la base de datos porque ya lo hemos hecho en el archivo de configuración `docker-compose.yml`.
+No tendremos que indicar ni configurar la base de datos porque ya lo hemos hecho en el archivo de configuración **docker-compose.yml**.
 
 ![](assets/7.png)
 
@@ -216,7 +206,7 @@ Comprobaremos que también funciona el _frontend_.
 
 ### PHPMyAdmin
 
-Luego, comprobaremos que podemos acceder a `phpmyadmin` por el puerto **8080**.
+Luego, comprobaremos que podemos acceder a **phpmyadmin** por el puerto **8080**.
 
 ![](assets/10.png)
 
@@ -236,7 +226,7 @@ Una vez hayamos entrado comenzaremos a personalizar este **CRM** para que funcio
 
 ### PHPPgAdmin
 
-Verificamos que podemos acceder a `phppgadmin` por el puerto **8888**.
+Verificamos que podemos acceder a **phppgadmin** por el puerto **8888**.
 
 ![](assets/13.png)
 
