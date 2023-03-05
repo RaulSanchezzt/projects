@@ -553,3 +553,76 @@ $ docker compose up -d
 ```
 
 Then just execute the command to start the containers and it's done!.
+
+## Monitoring
+
+### ELK
+
+Now, we are using ELK.
+
+```docker
+$ cd elk
+
+docker compose up -d
+[+] Running 4/4
+ ⠿ Network elk_default            Created                                                                          0.0s
+ ⠿ Container elk-kibana-1         Started                                                                          1.1s
+ ⠿ Container elk-logstash-1       Started                                                                          1.0s
+ ⠿ Container elk-elasticsearch-1  Started                                                                          1.1s
+```
+
+Then, we can see the stats for this containers.
+
+```docker
+$ docker stats
+
+CONTAINER ID   NAME                  CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O   PIDS
+84d8a426ed20   elk-logstash-1        6.57%     783.5MiB / 7.761GiB   9.86%     10.9kB / 30.1kB   0B / 0B     48
+b09a570e28aa   elk-elasticsearch-1   1.81%     1.424GiB / 7.761GiB   18.34%    11.4MB / 183kB    0B / 0B     78
+a67c5e8aa232   elk-kibana-1          4.41%     672MiB / 7.761GiB     8.46%     175kB / 11.4MB    0B / 0B     12
+```
+
+### cAdvisor
+
+Let's use [cAdvisor](https://hub.docker.com/r/google/cadvisor/) now!
+
+```docker
+$ docker run -d \
+      --name cadvisor \
+      -p 8080:8080 \
+      google/cadvisor:latest
+Unable to find image 'google/cadvisor:latest' locally
+latest: Pulling from google/cadvisor
+ff3a5c916c92: Pull complete
+44a45bb65cdf: Downloading [================>                                  ]  5.055MB/15.29MB
+0bbe1a2fe2a6: Downloading [=============================>                     ]    7.8MB/13.17MB
+```
+
+### Prometheus & Grafana
+
+Run the containers...
+
+```docker
+$ cd monitor/
+
+$ docker compose up -d
+[+] Running 5/5
+ ⠿ Network monitor           Created                                                                               0.0s
+ ⠿ Container grafana         Started                                                                               1.0s
+ ⠿ Container prometheus      Started                                                                               1.4s
+ ⠿ Container redis           Started                                                                               1.3s
+ ⠿ Container redis-exporter  Started                                                                               1.0s
+```
+
+Then, we can see the containers running...
+
+```docker
+$ docker compose ps
+NAME                COMMAND                  SERVICE             STATUS              PORTS
+grafana             "/run.sh"                grafana             running             0.0.0.0:3000->3000/tcp
+prometheus          "/bin/prometheus --c…"   prometheus          running             0.0.0.0:9090->9090/tcp
+redis               "docker-entrypoint.s…"   redis               running             0.0.0.0:6379->6379/tcp
+redis-exporter      "/redis_exporter"        redis_exporter      running             0.0.0.0:9121->9121/tcp
+```
+
+Finally, we can create a new data source in Grafana from Prometheus.
