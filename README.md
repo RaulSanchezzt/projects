@@ -19,6 +19,7 @@ This is a repository to store the projects I create when I do courses or to prac
 ## [DevOps](/DevOps/)
 
 - [ASIR - Proyecto Web Casero](/DevOps/ASIR%20-%20Proyecto%20Web%20Casero/)
+- [OpenWebinars - Automated Testing with Docker](/DevOps/OpenWebinars%20-%20Automated%20Testing%20with%20Docker/)
 - [OpenWebinars - Docker for Devs](/DevOps/OpenWebinars%20-%20Docker%20for%20Devs/) ⭐
 - [Udemy - Docker Bootcamp Zero to Expert](/DevOps/Udemy%20-%20Docker%20Bootcamp%20Zero%20to%20Expert/)
 
