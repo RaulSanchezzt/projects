@@ -1,0 +1,168 @@
+[
+  {
+    "description": "login fallido introduciendo distintos valores.",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given el usuario abre la web de angular",
+        "category": "Este archivo contiene escenarios de prueba de la web de openwebinars.: login fallido introduciendo distintos valores.",
+        "durationMillis": 996000000,
+        "sourceLocation": {
+          "filePath": "src/Features/OpenWebinars.feature",
+          "line": 4,
+          "column": 5
+        },
+        "progress": {
+          "step": 1,
+          "steps": 2
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When hace click en el botón de start",
+        "category": "Este archivo contiene escenarios de prueba de la web de openwebinars.: login fallido introduciendo distintos valores.",
+        "durationMillis": 1935000000,
+        "sourceLocation": {
+          "filePath": "src/Features/OpenWebinars.feature",
+          "line": 5,
+          "column": 5
+        },
+        "progress": {
+          "step": 2,
+          "steps": 2
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given el usuario abre la web de angular",
+          "category": "Este archivo contiene escenarios de prueba de la web de openwebinars.: login fallido introduciendo distintos valores.",
+          "durationMillis": 996000000,
+          "sourceLocation": {
+            "filePath": "src/Features/OpenWebinars.feature",
+            "line": 4,
+            "column": 5
+          },
+          "progress": {
+            "step": 1,
+            "steps": 2
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When hace click en el botón de start",
+          "category": "Este archivo contiene escenarios de prueba de la web de openwebinars.: login fallido introduciendo distintos valores.",
+          "durationMillis": 1935000000,
+          "sourceLocation": {
+            "filePath": "src/Features/OpenWebinars.feature",
+            "line": 5,
+            "column": 5
+          },
+          "progress": {
+            "step": 2,
+            "steps": 2
+          }
+        }
+      ]
+    ],
+    "duration": 2931000000
+  },
+  {
+    "description": "login fallido introduciendo distintos valores.",
+    "assertions": [
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      },
+      {
+        "passed": true
+      }
+    ],
+    "events": [
+      {
+        "emitterEvent": "testPass",
+        "name": "Given el usuario abre la web de angular",
+        "category": "Este archivo contiene escenarios de prueba de la web de openwebinars.: login fallido introduciendo distintos valores.",
+        "durationMillis": 1372000000,
+        "sourceLocation": {
+          "filePath": "src/Features/OpenWebinars.feature",
+          "line": 4,
+          "column": 5
+        },
+        "progress": {
+          "step": 1,
+          "steps": 2
+        }
+      },
+      {
+        "emitterEvent": "testPass",
+        "name": "When hace click en el botón de features",
+        "category": "Este archivo contiene escenarios de prueba de la web de openwebinars.: login fallido introduciendo distintos valores.",
+        "durationMillis": 1892000000,
+        "sourceLocation": {
+          "filePath": "src/Features/OpenWebinars.feature",
+          "line": 5,
+          "column": 5
+        },
+        "progress": {
+          "step": 2,
+          "steps": 2
+        }
+      }
+    ],
+    "emitToTestRunner": [
+      [
+        "testPass",
+        {
+          "name": "Given el usuario abre la web de angular",
+          "category": "Este archivo contiene escenarios de prueba de la web de openwebinars.: login fallido introduciendo distintos valores.",
+          "durationMillis": 1372000000,
+          "sourceLocation": {
+            "filePath": "src/Features/OpenWebinars.feature",
+            "line": 4,
+            "column": 5
+          },
+          "progress": {
+            "step": 1,
+            "steps": 2
+          }
+        }
+      ],
+      [
+        "testPass",
+        {
+          "name": "When hace click en el botón de features",
+          "category": "Este archivo contiene escenarios de prueba de la web de openwebinars.: login fallido introduciendo distintos valores.",
+          "durationMillis": 1892000000,
+          "sourceLocation": {
+            "filePath": "src/Features/OpenWebinars.feature",
+            "line": 5,
+            "column": 5
+          },
+          "progress": {
+            "step": 2,
+            "steps": 2
+          }
+        }
+      ]
+    ],
+    "duration": 3265000000
+  }
+]
