@@ -6,14 +6,14 @@ export default function Guitar({ guitar }) {
 
   return (
     <div className="guitar">
-        <img src={image.data.attributes.formats.medium.url} alt={`${name} Image`} />
+        <img src={image.data.attributes.formats.medium.url} alt={`${description}`} />
       <div className="content">
         <h3>{name}</h3>
         <p className="description">{description}</p>
-        <p className="price">{price}</p>
+        <p className="price">${price}</p>
 
         <Link className="link" to={`/guitars/${url}`}>
-            See Product
+            See more
         </Link>
       </div>
     </div>
