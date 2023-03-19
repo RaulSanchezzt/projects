@@ -2,10 +2,11 @@ const { ethers } = require("ethers");
 
 const provider = new ethers.providers.JsonRpcProvider(`http://localhost:8545`);
 
-const account1 = "0x8C480406D2120BE9f55059DA1eAfb9e81701c0b4";
-const account2 = "0xe61E6fa16280c265198927F801ee1dABA267Cf78";
+const account1 = "0x90F8bf6A479f320ead074411a4B0e7944Ea8c9C1";
+const account2 = "0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0";
+
 const privateKey1 =
-  "0xc8f7fd47fd17ed28cbe799903f1307f5d13d7095727de2dacbe641e97da76766";
+  "0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d";
 
 const wallet = new ethers.Wallet(privateKey1, provider);
 
@@ -15,7 +16,7 @@ const ERC20_ABI = [
   "function transfer(address to, uint amount) returns (bool)",
 ];
 
-const address = "0x83415Ff574b12CfA6F6EC7aaf30B01CA728553E4"; // Address of my Smart Contract in Ganache
+const address = "0x5b1869D9A4C187F2EAa108f3062412ecf0526b24"; // Address of my Smart Contract in Ganache
 const contract = new ethers.Contract(address, ERC20_ABI, provider);
 
 const main = async () => {
