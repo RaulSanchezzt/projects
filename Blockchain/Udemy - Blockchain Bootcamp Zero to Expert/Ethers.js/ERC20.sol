@@ -5,7 +5,6 @@ pragma solidity ^0.8.4;
 // Interfaz del estandard definido por la EIP (https://eips.ethereum.org/EIPS/eip-20)
 
 interface IERC20 {
-
     //Devuelve la cantidad de tokens existentes.
     function totalSupply() external view returns (uint256);
 
@@ -20,7 +19,10 @@ interface IERC20 {
     /* Devuelve el numero restante de tokens que se le permitira al `spender`
     gastar en nombre del `owner` a traves de {transferFrom}. Este valor es
     cero por defecto. Este valor cambia cuando {approve} o {transferFrom} son llamados. */
-    function allowance(address owner, address spender) external view returns (uint256);
+    function allowance(
+        address owner,
+        address spender
+    ) external view returns (uint256);
 
     /* Establece una `amount` como la asignacion de `spender` sobre los tokens 
     de la persona que llama. Devuelve un valor booleano que indica si la operacion tuvo exito.
@@ -42,16 +44,19 @@ interface IERC20 {
 
     /* Se emite cuando la asignacion de un `spender` para un `owner` se establece mediante
     una llamada a {approve}. El `value` es la nueva asignacion. */
-    event Approval(address indexed owner, address indexed spender, uint256 value);
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 value
+    );
 }
 
 // Smart Contract de los tokens ERC20
 contract ERC20 is IERC20 {
-
     // Estructuras de datos
     mapping(address => uint256) private _balances;
     mapping(address => mapping(address => uint256)) private _allowances;
-    
+
     // Variables
     uint256 private _totalSupply;
     string private _name;
@@ -91,7 +96,9 @@ contract ERC20 is IERC20 {
     }
 
     // Ver: {IERC20-balanceOf}.
-    function balanceOf(address account) public view virtual override returns (uint256) {
+    function balanceOf(
+        address account
+    ) public view virtual override returns (uint256) {
         return _balances[account];
     }
 
@@ -99,21 +106,30 @@ contract ERC20 is IERC20 {
     Requisitos:
     - `to` no puede ser la direccion cero.
     - la persona que ejecuta debe tener un saldo de al menos `amount`. */
-    function transfer(address to, uint256 amount) public virtual override returns (bool) {
+    function transfer(
+        address to,
+        uint256 amount
+    ) public virtual override returns (bool) {
         address owner = msg.sender;
         _transfer(owner, to, amount);
         return true;
     }
 
     // Ver: {IERC20-allowance}.
-    function allowance(address owner, address spender) public view virtual override returns (uint256) {
+    function allowance(
+        address owner,
+        address spender
+    ) public view virtual override returns (uint256) {
         return _allowances[owner][spender];
     }
 
     /* Ver: {IERC20-approve}.
     Requisitos:
     - `spender` no puede ser una direccion cero. */
-    function approve(address spender, uint256 amount) public virtual override returns (bool) {
+    function approve(
+        address spender,
+        uint256 amount
+    ) public virtual override returns (bool) {
         address owner = msg.sender;
         _approve(owner, spender, amount);
         return true;
@@ -141,7 +157,10 @@ contract ERC20 is IERC20 {
     Emite un evento de {Approval} indicando el permiso actualizado.
     Requisitos:
     - `spender` no puede ser una direccion cero. */
-    function increaseAllowance(address spender, uint256 addedValue) public virtual returns (bool) {
+    function increaseAllowance(
+        address spender,
+        uint256 addedValue
+    ) public virtual returns (bool) {
         address owner = msg.sender;
         _approve(owner, spender, _allowances[owner][spender] + addedValue);
         return true;
@@ -152,10 +171,16 @@ contract ERC20 is IERC20 {
     Requisitos:
     - `spender` no puede ser la direccion cero.
     - `spender` debe tener una asignacion para el usuario que ejecuta de al menos `subtractedValue`. */
-    function decreaseAllowance(address spender, uint256 subtractedValue) public virtual returns (bool) {
+    function decreaseAllowance(
+        address spender,
+        uint256 subtractedValue
+    ) public virtual returns (bool) {
         address owner = msg.sender;
         uint256 currentAllowance = _allowances[owner][spender];
-        require(currentAllowance >= subtractedValue, "ERC20: decreased allowance below zero");
+        require(
+            currentAllowance >= subtractedValue,
+            "ERC20: decreased allowance below zero"
+        );
         unchecked {
             _approve(owner, spender, currentAllowance - subtractedValue);
         }
@@ -178,7 +203,10 @@ contract ERC20 is IERC20 {
         require(to != address(0), "ERC20: transfer to the zero address");
         _beforeTokenTransfer(from, to, amount);
         uint256 fromBalance = _balances[from];
-        require(fromBalance >= amount, "ERC20: transfer amount exceeds balance");
+        require(
+            fromBalance >= amount,
+            "ERC20: transfer amount exceeds balance"
+        );
         unchecked {
             _balances[from] = fromBalance - amount;
         }
@@ -247,7 +275,10 @@ contract ERC20 is IERC20 {
     ) internal virtual {
         uint256 currentAllowance = allowance(owner, spender);
         if (currentAllowance != type(uint256).max) {
-            require(currentAllowance >= amount, "ERC20: insufficient allowance");
+            require(
+                currentAllowance >= amount,
+                "ERC20: insufficient allowance"
+            );
             unchecked {
                 _approve(owner, spender, currentAllowance - amount);
             }
