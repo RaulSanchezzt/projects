@@ -1,0 +1,94 @@
+version: "3"
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: Portainer
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./portainer-data:/data
+    ports:
+      - 9000:9000
+      - 9443:9443
+    networks:
+      - tfg
+
+  reverse-proxy:
+    # The official v2 Traefik docker image
+    image: traefik:v2.10
+    container_name: Reverse-Proxy
+    # Enables the web UI and tells Traefik to listen to docker
+    command: --api.insecure=true --providers.docker
+    ports:
+      # The HTTP port
+      # - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8888:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - tfg
+
+  db:
+    image: mariadb:10.6
+    container_name: MariaDB
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=Welcome123456789
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - tfg
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - db
+    container_name: phpmyadmin
+    ports:
+      - 1111:80
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_PASSWORD: root
+    networks:
+      - tfg
+
+  cloud:
+    image: nextcloud
+    container_name: NextCloud
+    restart: always
+    ports:
+      - 88:80
+    links:
+      - db
+    volumes:
+      - nextcloud:/var/www/html
+      - apps:/var/www/html/custom_apps
+      - config:/var/www/html/config
+      - data:/var/www/html/data
+    environment:
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=Welcome123456789
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_HOST=db
+    networks:
+      - tfg
+
+volumes:
+  db:
+  nextcloud:
+  apps:
+  config:
+  data:
+
+networks:
+  tfg:
+    driver: bridge
