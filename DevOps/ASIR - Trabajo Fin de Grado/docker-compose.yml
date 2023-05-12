@@ -21,6 +21,7 @@ services:
   reverse-proxy:
     image: traefik:v2.10
     container_name: Reverse-Proxy
+    restart: always
     # Enables the web UI and tells Traefik to listen to docker
     command: --api.insecure=true --providers.docker
     ports:
@@ -57,6 +58,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
+    restart: always
     depends_on:
       - db
     ports:
@@ -95,9 +97,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.cloud.rule=Host(`cloud.localhost`)"
       - "traefik.http.routers.cloud.entrypoints=http"
-      - "traefik.http.routers.cloud.tls=false"
-      - "traefik.http.routers.cloud.tls.certresolver=http"
-      - "traefik.http.routers.cloud.service=cloud"
+      - "traefik.http.routers.cloud.tls=true"
+      - "traefik.http.routers.cloud.tls.certresolver=letsencrypt"
       - "traefik.http.services.cloud.loadbalancer.server.port=80"
       - "traefik.docker.network=tfg"
       # - "traefik.http.routers.cloud.middlewares=cloud-dav,default@file"
@@ -118,7 +119,7 @@ services:
   pihole:
     image: pihole/pihole:latest
     container_name: Pi-Hole
-    restart: unless-stopped
+    restart: always
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -129,6 +130,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.pihole.rule=Host(`pihole.localhost`)"
+      - "traefik.http.routers.pihole.entrypoints=http"
     environment:
       TZ: "Europe/Berlin"
       WEBPASSWORD: "Welcome123456789"
