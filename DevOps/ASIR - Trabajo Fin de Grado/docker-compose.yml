@@ -98,7 +98,7 @@ services:
     depends_on:
       - db
     ports:
-      - 1111:80
+      - 8888:80
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.localhost`)"
@@ -113,8 +113,34 @@ services:
       PMA_HOST: db
       PMA_PORT: 3306
       PMA_PASSWORD: root
+      PMA_ARBITRARY: 1
     networks:
       - tfg
+
+  wireguard:
+    image: linuxserver/wireguard:latest
+    container_name: Wireguard
+    restart: always
+    volumes:
+      - ./wireguard-config:/config
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      # - SERVERURL=wireguard.domain.com #optional
+      # - SERVERPORT=51820 #optional
+      - PEERS=5 #optional
+      - PEERDNS=auto #optional
+      - INTERNAL_SUBNET=10.13.13.0 #optional
+      - ALLOWEDIPS=0.0.0.0/0 #optional
+      - PERSISTENTKEEPALIVE_PEERS= #optional
+      - LOG_CONFS=true #optional
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
 
   pihole:
     image: pihole/pihole:latest
