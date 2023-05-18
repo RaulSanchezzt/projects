@@ -12,31 +12,20 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./portainer-data:/data
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.portainer.rule=Host(`portainer.localhost`)"
     networks:
       - tfg
 
   reverse-proxy:
-    image: traefik:v2.10
+    image: jc21/nginx-proxy-manager
     container_name: Reverse-Proxy
     restart: always
-    # Enables the web UI and tells Traefik to listen to docker
-    command: --api.insecure=true --providers.docker
     ports:
-      # The HTTP port
-      - "80:80"
-      # The Web UI (enabled by --api.insecure=true)
-      - "8080:8080"
+      # - "80:80"
+      - "443:443"
+      - "81:81"
     volumes:
-      # So that Traefik can listen to the Docker events
-      - /var/run/docker.sock:/var/run/docker.sock
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.proxy.rule=Host(`traefik.localhost`)"
-      - "traefik.http.routers.api.service=api@internal"
-      - "traefik.http.routers.api.entrypoints=web"
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
     networks:
       - tfg
 
@@ -53,17 +42,6 @@ services:
       - apps:/var/www/html/custom_apps
       - config:/var/www/html/config
       - data:/var/www/html/data
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.cloud.rule=Host(`cloud.localhost`)"
-      - "traefik.http.routers.cloud.entrypoints=http"
-      - "traefik.http.routers.cloud.tls=true"
-      - "traefik.http.routers.cloud.tls.certresolver=letsencrypt"
-      - "traefik.http.services.cloud.loadbalancer.server.port=80"
-      - "traefik.docker.network=tfg"
-      # - "traefik.http.routers.cloud.middlewares=cloud-dav,default@file"
-      # - "traefik.http.middlewares.cloud-dav.replacepathregex.regex=^/.well-known/ca(l|rd)dav"
-      # - "traefik.http.middlewares.cloud-dav.replacepathregex.replacement=/remote.php/dav/"
     environment:
       - NEXTCLOUD_ADMIN_USER=admin
       - NEXTCLOUD_ADMIN_PASSWORD=Welcome123456789
@@ -99,16 +77,6 @@ services:
       - db
     ports:
       - 8888:80
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.phpmyadmin.rule=Host(`phpmyadmin.localhost`)"
-      - "traefik.http.routers.phpmyadmin.entrypoints=https"
-      - "traefik.http.routers.phpmyadmin.tls=true"
-      - "traefik.http.routers.phpmyadmin.tls.certresolver=http"
-      - "traefik.http.routers.phpmyadmin.service=phpmyadmin"
-      - "traefik.http.services.phpmyadmin.loadbalancer.server.port=80"
-      - "traefik.docker.network=tfg"
-      - "traefik.http.routers.phpmyadmin.middlewares=default@file"
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
@@ -153,10 +121,6 @@ services:
     volumes:
       - "./etc-pihole:/etc/pihole"
       - "./etc-dnsmasq.d:/etc/dnsmasq.d"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.pihole.rule=Host(`pihole.localhost`)"
-      - "traefik.http.routers.pihole.entrypoints=http"
     environment:
       TZ: "Europe/Berlin"
       WEBPASSWORD: "Welcome123456789"
