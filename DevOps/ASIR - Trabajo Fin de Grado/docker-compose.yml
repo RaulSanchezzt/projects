@@ -24,7 +24,7 @@ services:
       - "443:443"
       - "81:81"
     volumes:
-      - ./data:/data
+      - ./nginx-proxy-manager-data:/data
       - ./letsencrypt:/etc/letsencrypt
     networks:
       - tfg
@@ -39,9 +39,9 @@ services:
       - 88:80
     volumes:
       - nextcloud:/var/www/html
-      - apps:/var/www/html/custom_apps
-      - config:/var/www/html/config
-      - data:/var/www/html/data
+      - nextcloud-apps:/var/www/html/custom_apps
+      - nextcloud-config:/var/www/html/config
+      - nextcloud-data:/var/www/html/data
     environment:
       - NEXTCLOUD_ADMIN_USER=admin
       - NEXTCLOUD_ADMIN_PASSWORD=Welcome123456789
@@ -60,7 +60,7 @@ services:
     command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
     restart: always
     volumes:
-      - db:/var/lib/mysql
+      - mariadb-data:/var/lib/mysql
     environment:
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=Welcome123456789
@@ -128,11 +128,12 @@ services:
       - tfg
 
 volumes:
-  db:
+  mariadb-data:
   nextcloud:
-  apps:
-  config:
-  data:
+  nextcloud-apps:
+  nextcloud-config:
+  nextcloud-data:
+    external: true
 
 networks:
   tfg:
