@@ -16,7 +16,7 @@ services:
       - tfg
 
   reverse-proxy:
-    image: jc21/nginx-proxy-manager
+    image: jc21/nginx-proxy-manager:latest
     container_name: Reverse-Proxy
     restart: always
     ports:
@@ -30,7 +30,7 @@ services:
       - tfg
 
   cloud:
-    image: nextcloud
+    image: nextcloud:latest
     container_name: NextCloud
     restart: always
     links:
@@ -57,7 +57,7 @@ services:
       - tfg
 
   db:
-    image: mariadb:10.6
+    image: mariadb:latest
     container_name: MariaDB
     command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
     restart: always
@@ -96,16 +96,12 @@ services:
     cap_add:
       - NET_ADMIN
     environment:
+      # - SERVERURL=
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Berlin
-      # - SERVERURL=wireguard.domain.com #optional
-      # - SERVERPORT=51820 #optional
-      - PEERS=5 #optional
-      - PEERDNS=auto #optional
-      - INTERNAL_SUBNET=10.10.10.0 #optional
-      - ALLOWEDIPS=0.0.0.0/0 #optional
-      - PERSISTENTKEEPALIVE_PEERS= #optional
+      - PEERS=Phone,Laptop,PC,TV
+      # - PERSISTENTKEEPALIVE_PEERS= #optional
       - LOG_CONFS=true #optional
     ports:
       - 51820:51820/udp
