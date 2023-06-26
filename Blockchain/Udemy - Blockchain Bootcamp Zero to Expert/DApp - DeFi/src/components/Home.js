@@ -6,6 +6,7 @@ import Web3 from "web3";
 
 import Navigation from "./Navbar";
 import MyCarousel from "./Carousel";
+import Main from "./Main";
 
 class App extends Component {
   async componentDidMount() {
@@ -111,7 +112,7 @@ class App extends Component {
 
   unstakeTokens = (amount) => {
     this.setState({ loading: true });
-    this.state.TokenFarm.methods
+    this.state.tokenFarm.methods
       .unstakeTokens()
       .send({ from: this.state.account })
       .on("transactionHash", (hash) => {
@@ -134,6 +135,24 @@ class App extends Component {
   }
 
   render() {
+    let content;
+    if (this.state.loading) {
+      content = (
+        <p id="loader" className="text-center">
+          Loading...
+        </p>
+      );
+    } else {
+      content = (
+        <Main
+          jamTokenBalance={this.state.jamTokenBalance}
+          stellartTokenBalance={this.state.stellartTokenBalance}
+          stakingBalance={this.state.stakingBalance}
+          stakeTokens={this.stakeTokens}
+          unstakeTokens={this.unstakeTokens}
+        />
+      );
+    }
     return (
       <div>
         <Navigation account={this.state.account} />
@@ -141,7 +160,7 @@ class App extends Component {
         <div className="container-fluid mt-5">
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
-              <div className="content mr-auto ml-auto"></div>
+              <div className="content mr-auto ml-auto">{content}</div>
             </main>
           </div>
         </div>
