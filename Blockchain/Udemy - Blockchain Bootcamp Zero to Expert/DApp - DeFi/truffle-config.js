@@ -5,7 +5,7 @@
  * them to suit your project as necessary.
  *
  * More information about configuration can be found at:
- * 
+ *
  * https://trufflesuite.com/docs/truffle/reference/configuration
  *
  * To deploy via Infura you'll need a wallet provider (like @truffle/hdwallet-provider)
@@ -18,10 +18,10 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require("@truffle/hdwallet-provider");
 
-// const fs = require('fs');
-//const mnemonic = fs.readFileSync(".secret").toString().trim();
+const fs = require("fs");
+const mnemonic = fs.readFileSync(".secret").toString().trim();
 
 module.exports = {
   /**
@@ -41,10 +41,34 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     development: {
-      host: "127.0.0.1",     // Localhost (default: none)
-      port: 8545,            // Standard Ethereum port (default: none)
-      network_id: "*",       // Any network (default: none)
-    },   
+      host: "127.0.0.1", // Localhost (default: none)
+      port: 8545, // Standard Ethereum port (default: none)
+      network_id: "*", // Any network (default: none)
+    },
+    // Binance Smart Chain Testnet (BSC)
+    bsc: {
+      provider: () =>
+        new HDWalletProvider(
+          mnemonic,
+          `https://data-seed-prebsc-1-s1.binance.org:8545`
+        ),
+      network_id: 97,
+      confirmations: 1,
+      timeoutBlocks: 200,
+      skipDryRun: true,
+    },
+    // Polygon Testnet (MATIC)
+    polygon: {
+      provider: () =>
+        new HDWalletProvider(
+          mnemonic,
+          `https://rpc-mumbai.maticvigil.com/v1/12358915d47563e0c708ce7c243744f533d7303b`
+        ),
+      network_id: 80001,
+      confirmations: 1,
+      timeoutBlocks: 200,
+      skipDryRun: true,
+    },
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
@@ -78,11 +102,11 @@ module.exports = {
   },
 
   // Configure your compilers
-  contracts_directory: './src/contracts/',
-  contracts_build_directory: './src/abis/',
+  contracts_directory: "./src/contracts/",
+  contracts_build_directory: "./src/abis/",
   compilers: {
     solc: {
-      version: "0.8.4",      // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.8.4", // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
@@ -91,7 +115,7 @@ module.exports = {
       //  },
       //  evmVersion: "byzantium"
       // }
-    }
+    },
   },
 
   // Truffle DB is currently disabled by default; to enable it, change enabled:

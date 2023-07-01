@@ -160,3 +160,102 @@ Summary
 > Total deployments:   4
 > Final cost:          0.06041214 ETH
 ```
+
+## Script
+
+To execute a script we can use `truffle`:
+
+```js
+$ truffle exec scripts/issue-token.js
+Using network 'development'.
+
+Tokens issued!
+```
+
+## Deploy to Polygon Testnet
+
+Finally, let's do the same in MATIC.
+
+```js
+$ truffle migrate --reset --network polygon
+
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+Starting migrations...
+======================
+> Network name:    'polygon'
+> Network id:      80001
+> Block gas limit: 29504076 (0x1c2324c)
+
+
+2_initial_migration.js
+======================
+
+   Deploying 'JamToken'
+   --------------------
+   > transaction hash:    0xe2fb212b74e9909041112405b169a632235c2c496e394f0c90f540d5a739d313
+   > Blocks: 1            Seconds: 8
+   > contract address:    0xf8e6222AaE40293F90CE8450ccB98CA1d03b5461
+   > block number:        37431697
+   > block timestamp:     1688156900
+   > account:             0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D
+   > balance:             0.69784775498708653
+   > gas used:            860898 (0xd22e2)
+   > gas price:           2.500000015 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00215224501291347 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 1 (block: 37431698)
+
+   Deploying 'StellartToken'
+   -------------------------
+   > transaction hash:    0x8462696b3d17becf58727954ded25c36fd397de25447a15cf9b843d0adcdb720
+   > Blocks: 2            Seconds: 8
+   > contract address:    0xdDcf2F5ab9021304cb66Cf5C3B1F9f85147d7909
+   > block number:        37431702
+   > block timestamp:     1688156920
+   > account:             0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D
+   > balance:             0.69569535997417216
+   > gas used:            860958 (0xd231e)
+   > gas price:           2.500000015 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00215239501291437 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 1 (block: 37431703)
+
+   Deploying 'TokenFarm'
+   ---------------------
+   > transaction hash:    0xbb1109c22560d74c9dfcfdc52cc6e2a2575fdf81217e379f4b8521e78d127f8b
+   > Blocks: 1            Seconds: 4
+   > contract address:    0xF29AEE22e20996C0DA299338Eb2F3FA7ccB139E2
+   > block number:        37431706
+   > block timestamp:     1688156936
+   > account:             0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D
+   > balance:             0.693015742458094455
+   > gas used:            1071847 (0x105ae7)
+   > gas price:           2.500000015 gwei
+   > value sent:          0 ETH
+   > total cost:          0.002679617516077705 ETH
+
+   Pausing for 1 confirmations...
+
+   -------------------------------
+   > confirmation number: 1 (block: 37431707)
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.006984257541905545 ETH
+
+Summary
+=======
+> Total deployments:   3
+> Final cost:          0.006984257541905545 ETH
+```
