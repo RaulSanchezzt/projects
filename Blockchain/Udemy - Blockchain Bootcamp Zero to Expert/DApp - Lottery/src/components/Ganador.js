@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import smart_contract from "../abis/loteria.json";
 import Web3 from "web3";
 import Swal from "sweetalert2";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+// import Row from "react-bootstrap/Row";
+// import Col from "react-bootstrap/Col";
 
 import Navigation from "./Navbar";
 import MyCarousel from "./Carousel";
-import { Container } from "react-bootstrap";
+// import { Container } from "react-bootstrap";
 
 class Ganador extends Component {
   async componentDidMount() {
