@@ -1,8 +1,10 @@
 # Ethereum Book - Mastering Ethereum
 
+Here are some practical exercises that I have found in the [Ethereum Book](https://github.com/ethereumbook/ethereumbook).
+
 ## Getting Started with MetaMask (74)
 
-After creating a new **wallet** to start develop, let's get some _test Ether_ in the **Sepolia Network** with a [Faucet](https://sepoliafaucet.com/). I did it in [transaction](https://sepolia.etherscan.io/tx/0x1d929a0c4854213cac32d695966f7317326c9a14ccca12a08b7b91ea6f5f28e9)
+After creating a new **wallet** to start develop, let's get some _test Ether_ in the **Sepolia Network** with a [Faucet](https://sepoliafaucet.com/). I did it in this [transaction](https://sepolia.etherscan.io/tx/0x1d929a0c4854213cac32d695966f7317326c9a14ccca12a08b7b91ea6f5f28e9)
 
 ## A Simple Contract: A Test Ether Faucet (92)
 
@@ -74,3 +76,11 @@ solc --abi Solidity/Faucet.sol
 Contract JSON ABI
 [{"inputs":[{"internalType":"uint256","name":"withdraw_amount","type":"uint256"}],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}]
 ```
+
+## Adding a Constructor and selfdestruct to Faucet (286)
+
+We probably want selfdestruct to be callable only by the EOA that originally created the contract. By convention this is usually stored in an address variable called owner. Our constructor sets the owner variable, and the selfdestruct unction will first check that the owner called it directly. First, let's [deploy](https://sepolia.etherscan.io/tx/0x1a3ff3d610a44eb16def55bbc9f07e9a7526b1bb1240569d3151dc4fa354b642) the [Smart Contract](https://sepolia.etherscan.io/address/0xa965f89b7185ac283e8c3dbfad824c1455044504) with the new code.
+
+Then [send](https://sepolia.etherscan.io/tx/0xbabe7a99ad02b1d7a48c7a991f253280dffa5b3f16ed536464087d94d77e4802) some _Ether_ to test if it comes back later.
+
+Finally, let's try to [destroy](https://sepolia.etherscan.io/tx/0x70f7ab0f7e37d594d2eddfc141d7b9802ec74228f85915cfa9d1dd6ffbeb46ca) the new contract, and now we can check the _Ether_ [came back](https://sepolia.etherscan.io/tx/0x70f7ab0f7e37d594d2eddfc141d7b9802ec74228f85915cfa9d1dd6ffbeb46ca#internal) and the [code](https://sepolia.etherscan.io/address/0xa965f89b7185ac283e8c3dbfad824c1455044504/advanced#code) is gone.
