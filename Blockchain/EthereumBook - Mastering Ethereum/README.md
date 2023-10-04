@@ -84,3 +84,7 @@ We probably want selfdestruct to be callable only by the EOA that originally cre
 Then [send](https://sepolia.etherscan.io/tx/0xbabe7a99ad02b1d7a48c7a991f253280dffa5b3f16ed536464087d94d77e4802) some _Ether_ to test if it comes back later.
 
 Finally, let's try to [destroy](https://sepolia.etherscan.io/tx/0x70f7ab0f7e37d594d2eddfc141d7b9802ec74228f85915cfa9d1dd6ffbeb46ca) the new contract, and now we can check the _Ether_ [came back](https://sepolia.etherscan.io/tx/0x70f7ab0f7e37d594d2eddfc141d7b9802ec74228f85915cfa9d1dd6ffbeb46ca#internal) and the [code](https://sepolia.etherscan.io/address/0xa965f89b7185ac283e8c3dbfad824c1455044504/advanced#code) is gone.
+
+## Contract Inheritance (290)
+
+By inheriting _mortal_, which in turn inherits _owned_, the **Faucet** contract now has the `constructor` and `destroy` functions, and a defined owner. The functionality is the same as when those functions were within Faucet, but now we can reuse those functions in other contracts without writing them again. Code reuse and modularity make our code cleaner, easier to read, and easier to audit.
