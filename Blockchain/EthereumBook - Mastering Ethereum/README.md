@@ -88,3 +88,17 @@ Finally, let's try to [destroy](https://sepolia.etherscan.io/tx/0x70f7ab0f7e37d5
 ## Contract Inheritance (290)
 
 By inheriting _mortal_, which in turn inherits _owned_, the **Faucet** contract now has the `constructor` and `destroy` functions, and a defined owner. The functionality is the same as when those functions were within Faucet, but now we can reuse those functions in other contracts without writing them again. Code reuse and modularity make our code cleaner, easier to read, and easier to audit.
+
+## Events (294)
+
+When a transaction completes (successfully or not), it produces a _transaction receipt_. The transaction receipt contains log entries that provide information about the actions that occurred during the execution of the transaction.
+
+### Catching events (295)
+
+In order to test the events, first let's [deploy](https://sepolia.etherscan.io/tx/0xb167d1518ec259e94514399ebc9cfd7a907fcd4a839590a1c9abbc8c1f3af884) the new [Contract](https://sepolia.etherscan.io/address/0x342141b07c931c2e21296ba05569deabfec24b79).
+
+Then, [send](https://sepolia.etherscan.io/tx/0x638b2f29ce68524121aa6c5a6d6d51f8af5173f65f5b67685995ecc7e27615a6) some _ether_ to see the [Event](https://sepolia.etherscan.io/tx/0x638b2f29ce68524121aa6c5a6d6d51f8af5173f65f5b67685995ecc7e27615a6#eventlog) `Deposit`.
+
+Finally, let's withdraw some _ether_ to see the [Event](https://sepolia.etherscan.io/tx/0x76e1e76c397c4185c480117f70729e8ba3fb384f8ddb3de59101bb044af2c439#eventlog) `Withdrawal`.
+
+[Here](https://sepolia.etherscan.io/address/0x342141b07c931c2e21296ba05569deabfec24b79#events) we can see all the **events** emmited by the _Smart Contract_.
