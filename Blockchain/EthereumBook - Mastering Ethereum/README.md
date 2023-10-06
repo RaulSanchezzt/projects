@@ -102,3 +102,122 @@ Then, [send](https://sepolia.etherscan.io/tx/0x638b2f29ce68524121aa6c5a6d6d51f8a
 Finally, let's withdraw some _ether_ to see the [Event](https://sepolia.etherscan.io/tx/0x76e1e76c397c4185c480117f70729e8ba3fb384f8ddb3de59101bb044af2c439#eventlog) `Withdrawal`.
 
 [Here](https://sepolia.etherscan.io/address/0x342141b07c931c2e21296ba05569deabfec24b79#events) we can see all the **events** emmited by the _Smart Contract_.
+
+## Calling Other Contracts (298)
+
+Calling other contracts from within your contract is a very useful but potentially dangerous operation. The safest way to call another contract is if you create that other contract yourself.
+
+## Gas Considerations (305)
+
+Gas is a resource constraining the maximum amount of computation that Ethereum will allow a transaction to consume.
+
+### Estimating Gas Cost (308)
+
+First, let's create a new **truffle** environment.
+
+```js
+$ truffle init
+```
+
+Then copy the **Faucet.sol** file to the contracts directory and create a `JavaScript` file to deploy the contract. Deploy to your local network:
+
+```js
+$ truffle develop
+
+Truffle Develop started at http://127.0.0.1:9545/
+
+Accounts:
+(0) 0x3f0d3179f99e813a79425d248ae071a242791b2e
+(1) 0x357939eafb5654f278ec380d99d7d4627feec316
+(2) 0xec11c70f0fe5e1d7aa70469c191bb805febef835
+(3) 0xa3f6a26d60d245d84be798201050295aa907d5e6
+(4) 0x7ccd6953f9de46a3ab9e51641c41b2cc4177f8d8
+(5) 0x932fe0a9b918dae38e63b490c33d74c4e3e55972
+(6) 0x5659dd5b2dff4d61e5e8fc4956daf8f1e227923e
+(7) 0x89ca78d612a76154cd8f8eb79a79c953b886e79e
+(8) 0x6446b78f8fadaa541f48ff6a10a4fe3378720741
+(9) 0xe5f4a87e5570f4626a7cee4ddf7f420affeccb00
+
+truffle(develop)> deploy
+
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+Starting migrations...
+======================
+> Network name:    'develop'
+> Network id:      5777
+> Block gas limit: 6721975 (0x6691b7)
+
+
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0xf62728d60fa86fe685b2a96ccbeb09340939cf0e42517fbd87c0492cc450d31f
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xA72394d4D405A324114c869b7E568d820aCdA395
+   > block number:        1
+   > block timestamp:     1696601920
+   > account:             0x3F0D3179f99e813a79425D248ae071A242791B2e
+   > balance:             99.9991555345
+   > gas used:            250212 (0x3d164)
+   > gas price:           3.375 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0008444655 ETH
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:        0.0008444655 ETH
+
+
+2_deploy_contracts.js
+=====================
+
+   Deploying 'Faucet'
+   ------------------
+   > transaction hash:    0x305ad3eeb7ed07c42cc6c72997fb7493475ef084cdaa25fd7129616067598854
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x5d71672625307EeC44b2fAEFF1F701126B43EDBa
+   > block number:        3
+   > block timestamp:     1696601920
+   > account:             0x3F0D3179f99e813a79425D248ae071A242791B2e
+   > balance:             99.998345959416176378
+   > gas used:            207423 (0x32a3f)
+   > gas price:           3.178367853 gwei
+   > value sent:          0 ETH
+   > total cost:          0.000659266595172819 ETH
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:     0.000659266595172819 ETH
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.001503732095172819 ETH
+```
+
+To obtain the gas price from the network we can use the `truffle console`:
+
+```js
+truffle(development)> web3.eth.getGasPrice(console.log);
+null 20000000000
+'20000000000'
+```
+
+Finally, exec the script\*:
+
+```js
+truffle(develop)> exec gas_estimates.js
+Using network 'develop'.
+Gas Price is 20000000000 wei
+gas estimation = 31397 units
+gas cost estimation = 627940000000000 wei
+gas cost estimation = 0.00062794 ether
+```
