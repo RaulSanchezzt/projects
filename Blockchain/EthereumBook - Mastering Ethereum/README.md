@@ -221,3 +221,15 @@ gas estimation = 31397 units
 gas cost estimation = 627940000000000 wei
 gas cost estimation = 0.00062794 ether
 ```
+
+## Reentrancy Attack
+
+Contracts also typically handle ether, and as such often send ether to various external user addresses. These operations require the contracts to submit external calls. These external calls can be hijacked by attackers, who can force the contracts to execute further code (through a fallback function), including calls back into themselves. To reproduce the attack, let's deploy a **vulnerable** [Smart Contract](https://sepolia.etherscan.io/address/0x85ad8bdc1e30fef63a30460649f0c3f96a90dc1d).
+
+Then, [deposit](https://sepolia.etherscan.io/tx/0xfc3d022e7af8dbb9650010dcff58d680e730dc97c56d61c89d0e4df8e8067591) some _ether_ to simmulate a real contract that have funds.
+
+Now we have a contract with 1 _ether_, let's deploy the [Attacker Contract](https://sepolia.etherscan.io/address/0xc0c1cad25261f6789a2ab1133b7e25ef5ca3f4d3) using the **address** of the victim and the **owner** as `constructor`.
+
+Finally, [start the attack](https://sepolia.etherscan.io/tx/0x964b37af473be6aa7b4ac5ea78503d163a6dd75f6dfdd19ab83c7a39c8086120) sending **0.1 eth** = `100000000000000000 wei` to the [Attacker Contract](https://sepolia.etherscan.io/address/0xc0c1cad25261f6789a2ab1133b7e25ef5ca3f4d3). This contract will deposit the value to the [vulnerable contract](https://sepolia.etherscan.io/address/0x85ad8bdc1e30fef63a30460649f0c3f96a90dc1d) and withdraw at the same time.
+
+When the atacker contract receives the incoming **ether**, it will withdraw more ether and send it to the owner. The [vulnerable contract](https://sepolia.etherscan.io/address/0x85ad8bdc1e30fef63a30460649f0c3f96a90dc1d#internaltx) will send the funds to the **Atacker** until it's empty. [Here](https://sepolia.etherscan.io/tx/0x964b37af473be6aa7b4ac5ea78503d163a6dd75f6dfdd19ab83c7a39c8086120#statechange) we can see the **state changes** of this transaction.
