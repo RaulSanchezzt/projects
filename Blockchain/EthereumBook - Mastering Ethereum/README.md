@@ -222,7 +222,7 @@ gas cost estimation = 627940000000000 wei
 gas cost estimation = 0.00062794 ether
 ```
 
-## Reentrancy Attack
+## Reentrancy Attack (333)
 
 Contracts also typically handle ether, and as such often send ether to various external user addresses. These operations require the contracts to submit external calls. These external calls can be hijacked by attackers, who can force the contracts to execute further code (through a fallback function), including calls back into themselves. To reproduce the attack, let's deploy a **vulnerable** [Smart Contract](https://sepolia.etherscan.io/address/0x85ad8bdc1e30fef63a30460649f0c3f96a90dc1d).
 
@@ -233,3 +233,23 @@ Now we have a contract with 1 _ether_, let's deploy the [Attacker Contract](http
 Finally, [start the attack](https://sepolia.etherscan.io/tx/0x964b37af473be6aa7b4ac5ea78503d163a6dd75f6dfdd19ab83c7a39c8086120) sending **0.1 eth** = `100000000000000000 wei` to the [Attacker Contract](https://sepolia.etherscan.io/address/0xc0c1cad25261f6789a2ab1133b7e25ef5ca3f4d3). This contract will deposit the value to the [vulnerable contract](https://sepolia.etherscan.io/address/0x85ad8bdc1e30fef63a30460649f0c3f96a90dc1d) and withdraw at the same time.
 
 When the atacker contract receives the incoming **ether**, it will withdraw more ether and send it to the owner. The [vulnerable contract](https://sepolia.etherscan.io/address/0x85ad8bdc1e30fef63a30460649f0c3f96a90dc1d#internaltx) will send the funds to the **Atacker** until it's empty. [Here](https://sepolia.etherscan.io/tx/0x964b37af473be6aa7b4ac5ea78503d163a6dd75f6dfdd19ab83c7a39c8086120#statechange) we can see the **state changes** of this transaction.
+
+## External Links
+
+### 1. What is Ethereum ?
+
+- The birth of Ethereum
+  - [Ethereum Prehistory post (49)](https://vitalik.ca/general/2017/09/14/prehistory.html)
+  - To Do (54)
+
+### 9. Smart Contract Security
+
+- Reentrancy
+  - [DAO hack (333)](https://en.wikipedia.org/wiki/The_DAO)
+  - [Gus Guimareas's blog post (333)](https://gus-tavo-guim.medium.com/reentrancy-attack-on-smart-contracts-how-to-identify-the-exploitable-and-an-example-of-an-attack-4470a2d8dfe4)
+  - [Ethereum Smart Contract Best Practices (333)](https://consensys.github.io/smart-contract-best-practices/attacks/reentrancy/)
+  - [Analysis of the DAO exploit (340)](https://hackingdistributed.com/2016/06/18/analysis-of-the-dao-exploit/)
+- Arithmetic Over/Underflows
+  - [How to Secure Your Smart Contracts (341)](https://medium.com/loom-network/how-to-secure-your-smart-contracts-6-solidity-vulnerabilities-and-how-to-avoid-them-part-1-c33048d4d17d)
+  - [Ethereum Smart Contract Best Practices (341)](https://consensys.github.io/smart-contract-best-practices/attacks/insecure-arithmetic/)
+  - [Ethereum, Solidity and integer overflows: programming blockchains like 1970 (341)](https://randomoracle.wordpress.com/2018/04/27/ethereum-solidity-and-integer-overflows-programming-blockchains-like-1970/)
