@@ -234,6 +234,28 @@ Finally, [start the attack](https://sepolia.etherscan.io/tx/0x964b37af473be6aa7b
 
 When the atacker contract receives the incoming **ether**, it will withdraw more ether and send it to the owner. The [vulnerable contract](https://sepolia.etherscan.io/address/0x85ad8bdc1e30fef63a30460649f0c3f96a90dc1d#internaltx) will send the funds to the **Atacker** until it's empty. [Here](https://sepolia.etherscan.io/tx/0x964b37af473be6aa7b4ac5ea78503d163a6dd75f6dfdd19ab83c7a39c8086120#statechange) we can see the **state changes** of this transaction.
 
+## Unexpected Ether (348)
+
+The `EtherGame.sol` represents a simple game (which would naturally involve race conditions) where players send `0.5 ether` to the contract in the hopes of being the player that reaches one of three milestones first. Milestones are denominated in ether. The first to reach the milestone may claim a portion of the ether when the game has ended. The game ends when the final milestone (10 ether) is reached; users can then claim their rewards.
+
+The issues come from the poor use of `this.balance` in both lines 17 and 33. A mischievous attacker could forcibly send a small amount of ether — say, `0.1 ether` — via the `selfdestruct` function to prevent any future players from reaching a milestone. `this.balance` will never be a multiple of `0.5 ether` thanks to this `0.1 ether` contribution, because all legitimate players can only send `0.5 ether` increments. This prevents all the if conditions on lines 21, 23, and 25 from being true.
+
+Even worse, a vengeful attacker who missed a milestone could forcibly send 10 ether (or an equivalent amount of ether that pushes the contract’s balance above the `finalMileStone`), which would lock all rewards in the contract forever. This is because the `claimReward` function will always revert, due to the require on line 33 (i.e., because `this.balance` is greater than `finalMileStone`).
+
+### Ether Game Example
+
+Let's do this using a [simplier example](https://github.com/sufublockchain/solidity/blob/main/EtherGame.sol): `EtherGameSufu.sol`. The goal of this game is to be the **2th player** to deposit `0.5 ether`. Winner will be able to withdraw all ether.
+
+First, let's [deploy](https://sepolia.etherscan.io/tx/0xdffbb6d1fd6856358b3ffe4eb02702ff488bb602856cee3474fbfe2c0ae571d5) the [Game](https://sepolia.etherscan.io/address/0xadfe2aba6ded129bd01771c5b112ea578aa39e59) using the **Account 1**: [0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D](https://sepolia.etherscan.io/address/0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D). Then, [deposit](https://sepolia.etherscan.io/tx/0xba38f3480aa20562ab7ee838cabface9ee49c8c888c51ea21f2d7761b106750e) `0.5 ether` with this account.
+
+Now, let's try if the Game works. The **Account 2**: [0x4bDE5261866EBE1f0f8F6d157767De73c6749b47](https://sepolia.etherscan.io/address/0x4bde5261866ebe1f0f8f6d157767de73c6749b47), [sent](https://sepolia.etherscan.io/tx/0x2faa5a77fd7633489717c615a14f87d01f6d3408e645f7440bec2d0c7cfe895c) `0.5 ether` and [claimed](https://sepolia.etherscan.io/tx/0x4f8ad17af673f6dd0ac301872702be0f8601c68e5f4ee71a067c0fde2c0e98b3) the **Reward**.
+
+Okay, now we now it works well, so let's try to break it. **Account 2** wants to play again so [send](https://sepolia.etherscan.io/tx/0x81c9af784148583b6bea31857a83c0f0ad77fced1e95e3e01da7082f0a35809b) `0.5 ether` again.
+
+The **Account 3**: [0xA4c4F1A9b450Ee6eDf9d7A3C46f77d3A16fbE8c0](https://sepolia.etherscan.io/address/0xA4c4F1A9b450Ee6eDf9d7A3C46f77d3A16fbE8c0), [deploys](https://sepolia.etherscan.io/tx/0x471600e4ca35469f2f273996e941a5ce180fb8cdb295c63d3dd0235010c974f4) the [Attack Contract](https://sepolia.etherscan.io/address/0x38cbf0a64e4df80a9d66cacda88abe9ed325861b) and [sends](https://sepolia.etherscan.io/tx/0xe3153af3258b0085cca1ab064a352d3b0ab0dac7f15f0bebfd1cf7ddacca14e2) `0.5 ether`. Finally, he calls the [Attack](https://sepolia.etherscan.io/tx/0xaeff15a4d4a570a99b22f890b6a050dda1837e8d9029b0d548fde091d932852f) function to `selfdestruct` his **Contract**. Before it destroys, will **transfer** the funds to the **Game**.
+
+The **Attack** forced the balance of the **Game** to equal 1 ether. Now no one can [deposit](https://sepolia.etherscan.io/tx/0x56371561371f3096553f87c668e374a793178f1126b6784528f865638a61ba1d) and the winner [cannot be set](https://sepolia.etherscan.io/tx/0xa05b1e842fcdd3f84326366bcd1d1c0d68775725d8dd5885238bffa629356952). The `ether` of the **Game** are lost forever :).
+
 ## External Links
 
 ### 1. What is Ethereum ?
@@ -253,3 +275,9 @@ When the atacker contract receives the incoming **ether**, it will withdraw more
   - [How to Secure Your Smart Contracts (341)](https://medium.com/loom-network/how-to-secure-your-smart-contracts-6-solidity-vulnerabilities-and-how-to-avoid-them-part-1-c33048d4d17d)
   - [Ethereum Smart Contract Best Practices (341)](https://consensys.github.io/smart-contract-best-practices/attacks/insecure-arithmetic/)
   - [Ethereum, Solidity and integer overflows: programming blockchains like 1970 (341)](https://randomoracle.wordpress.com/2018/04/27/ethereum-solidity-and-integer-overflows-programming-blockchains-like-1970/)
+- Real-World Examples: PoWHC and Batch Transfer Overflow (CVE-2018–10299)
+  - [How $800k Evaporated from the PoWH Coin Ponzi Scheme Overnight (347)](https://medium.com/@ebanisadr/how-800k-evaporated-from-the-powh-coin-ponzi-scheme-ove)
+  - [New batchOverflow Bug in Multiple ERC20 Smart Contracts (347)](https://peckshield.medium.com/alert-new-batchoverflow-bug-in-multiple-erc20-smart-contracts-cve-2018-10299-511067db6536)
+- Unexpected Ether
+  - [Martin Swende Blog (350)](https://swende.se/)
+  - [Sigma Prime Blog (350)](https://blog.sigmaprime.io/)
