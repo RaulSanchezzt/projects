@@ -242,7 +242,7 @@ The issues come from the poor use of `this.balance` in both lines 17 and 33. A m
 
 Even worse, a vengeful attacker who missed a milestone could forcibly send 10 ether (or an equivalent amount of ether that pushes the contract’s balance above the `finalMileStone`), which would lock all rewards in the contract forever. This is because the `claimReward` function will always revert, due to the require on line 33 (i.e., because `this.balance` is greater than `finalMileStone`).
 
-### Ether Game Example
+### Ether Game Example (351)
 
 Let's do this using a [simplier example](https://github.com/sufublockchain/solidity/blob/main/EtherGame.sol): `EtherGameSufu.sol`. The goal of this game is to be the **2th player** to deposit `0.5 ether`. Winner will be able to withdraw all ether.
 
@@ -255,6 +255,32 @@ Okay, now we now it works well, so let's try to break it. **Account 2** wants to
 The **Account 3**: [0xA4c4F1A9b450Ee6eDf9d7A3C46f77d3A16fbE8c0](https://sepolia.etherscan.io/address/0xA4c4F1A9b450Ee6eDf9d7A3C46f77d3A16fbE8c0), [deploys](https://sepolia.etherscan.io/tx/0x471600e4ca35469f2f273996e941a5ce180fb8cdb295c63d3dd0235010c974f4) the [Attack Contract](https://sepolia.etherscan.io/address/0x38cbf0a64e4df80a9d66cacda88abe9ed325861b) and [sends](https://sepolia.etherscan.io/tx/0xe3153af3258b0085cca1ab064a352d3b0ab0dac7f15f0bebfd1cf7ddacca14e2) `0.5 ether`. Finally, he calls the [Attack](https://sepolia.etherscan.io/tx/0xaeff15a4d4a570a99b22f890b6a050dda1837e8d9029b0d548fde091d932852f) function to `selfdestruct` his **Contract**. Before it destroys, will **transfer** the funds to the **Game**.
 
 The **Attack** forced the balance of the **Game** to equal 1 ether. Now no one can [deposit](https://sepolia.etherscan.io/tx/0x56371561371f3096553f87c668e374a793178f1126b6784528f865638a61ba1d) and the winner [cannot be set](https://sepolia.etherscan.io/tx/0xa05b1e842fcdd3f84326366bcd1d1c0d68775725d8dd5885238bffa629356952). The `ether` of the **Game** are lost forever :).
+
+## `DELEGATECALL` (356)
+
+Standard external message calls to contracts are handled by the `CALL` opcode, whereby code is run in the context of the external contract/function. The `DELEGATECALL` opcode is almost identical, except that the code executed at the targeted address is run in the context of the calling contract, and `msg.sender` and `msg.value` remain unchanged.
+
+Although the differences between these two opcodes are simple and intuitive, the use of `DELEGATECALL` can lead to unexpected code execution.
+
+The code in _libraries_ themselves can be secure and vulnerability-free; however, when run in the context of another application new vulnerabilities can arise.
+
+### Second Parity Multisig Wallet Hack (363)
+
+This is an example of how well-written library code can be exploited if run outside its intended context. The original library and wallet contracts can be found on [GitHub](https://github.com/openethereum/parity-ethereum/blob/b640df8fbb964da7538eef268dffc125b081a82f/js/src/contracts/snippets/enhanced-wallet.sol). Notice that the `Wallet` contract essentially passes all calls to the `WalletLibrary` contract via a **delegate call**.
+
+The intended operation of these contracts was to have a simple low-cost deployable `Wallet` contract whose codebase and main functionality were in the `WalletLibrary` contract. Unfortunately, the `WalletLibrary` contract is itself a contract and **maintains its own state**. It is possible to send calls to the `WalletLibrary` contract itself. Specifically, the `WalletLibrary` contract could be initialized and become owned.
+
+Let's try to reproduce this attack, first, [deploy](https://sepolia.etherscan.io/tx/0xb6d336be851c55d909144a49a0465c718c0e0210fd7707f16db2e86e96904890) the [WalletLibrary](https://sepolia.etherscan.io/address/0x3ad95af911e437ea65f5380dc3c4344b0060ea0a) using the **Account 1**: [0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D](https://sepolia.etherscan.io/address/0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D).
+
+Then, copy the address of the [WalletLibrary](https://sepolia.etherscan.io/address/0x3ad95af911e437ea65f5380dc3c4344b0060ea0a) contract and paste it on the **Wallet** contract _(line 530)_. After that, [deploy](https://sepolia.etherscan.io/tx/0x9159ec470c36c3615656c364a29c83ebc3ada78522059db4e51f8195881caced) the [Wallet](https://sepolia.etherscan.io/address/0x5f825f007b51499988d74abde90e73d14cd5b492) contract. In the constructor of this **Smart Contract** there are this fields:
+
+- **\_OWNERS:** ["0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D","0x4bDE5261866EBE1f0f8F6d157767De73c6749b47"]
+- **\_REQUIRED:** 2
+- **\_DAYLIMIT:** 40
+
+This _Wallet_ is going to belong to the [Account 1](https://sepolia.etherscan.io/address/0xb8b74dc6bce6b16dcd634ab94600a3c9967e6f0d) and [Account 2](https://sepolia.etherscan.io/address/0x4bde5261866ebe1f0f8f6d157767de73c6749b47), they require both signatures to to anything and they can't spend more than _40 ETH_. So [they](https://sepolia.etherscan.io/tx/0x71154a99bad201fc6d2b58c7abf98ee23b2432516c1c9629ae69fc5bb2f9bfb1) send [some](https://sepolia.etherscan.io/tx/0x2c19ea046737a0f70556b244a493cdaafa038570c28cfc9416b253c501530521) _ether_. Now the contract has **1 ETH** of balance but it **depends** in the **WalletLibrary**.
+
+The [Attacker](https://sepolia.etherscan.io/address/0xA4c4F1A9b450Ee6eDf9d7A3C46f77d3A16fbE8c0), became the [owner](https://sepolia.etherscan.io/tx/0x33fe5197a1b90423cdba56d88904a8d92c37c5ffdbcf2bef5f2084ffe73f49c5) of **WalletLibrary** using the `initWallet` method and he [destroyed](https://sepolia.etherscan.io/tx/0x45a6ec900a39daab6ed7fa2f19c5a67ec2afe75b1fb88bcb6f2a7e375dc5daec) the contract using the `kill` method. Now the [Account 1](https://sepolia.etherscan.io/address/0xb8b74dc6bce6b16dcd634ab94600a3c9967e6f0d) and [Account 2](https://sepolia.etherscan.io/address/0x4bde5261866ebe1f0f8f6d157767de73c6749b47) can't use his wallet because it depends on a contract that **don't exists anymore** :(.
 
 ## External Links
 
@@ -281,3 +307,9 @@ The **Attack** forced the balance of the **Game** to equal 1 ether. Now no one c
 - Unexpected Ether
   - [Martin Swende Blog (350)](https://swende.se/)
   - [Sigma Prime Blog (350)](https://blog.sigmaprime.io/)
+  - [Underhanded Solidity Coding Contest (355)](https://github.com/Arachnid/uscc/tree/master)
+- `DELEGATECALL`
+  - [Difference between CALL, CALLCODE and DELEGATECALL (356)](https://ethereum.stackexchange.com/questions/3667/difference-between-call-callcode-and-delegatecall)
+  - [Parity Multisig Hacked. Again (363)](https://medium.com/chain-cloud-company-blog/parity-multisig-hack-again-b46771eaa838)
+  - [An In-Depth Look at the Parity Multisig Bug (363)](https://hackingdistributed.com/2017/07/22/deep-dive-parity-bug/)
+  - [Contracts that were exploited (363)](https://github.com/openethereum/parity-ethereum/blob/b640df8fbb964da7538eef268dffc125b081a82f/js/src/contracts/snippets/enhanced-wallet.sol)
