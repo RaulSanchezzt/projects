@@ -282,6 +282,12 @@ This _Wallet_ is going to belong to the [Account 1](https://sepolia.etherscan.io
 
 The [Attacker](https://sepolia.etherscan.io/address/0xA4c4F1A9b450Ee6eDf9d7A3C46f77d3A16fbE8c0), became the [owner](https://sepolia.etherscan.io/tx/0x33fe5197a1b90423cdba56d88904a8d92c37c5ffdbcf2bef5f2084ffe73f49c5) of **WalletLibrary** using the `initWallet` method and he [destroyed](https://sepolia.etherscan.io/tx/0x45a6ec900a39daab6ed7fa2f19c5a67ec2afe75b1fb88bcb6f2a7e375dc5daec) the contract using the `kill` method. Now the [Account 1](https://sepolia.etherscan.io/address/0xb8b74dc6bce6b16dcd634ab94600a3c9967e6f0d) and [Account 2](https://sepolia.etherscan.io/address/0x4bde5261866ebe1f0f8f6d157767de73c6749b47) can't use his wallet because it depends on a contract that **don't exists anymore** :(.
 
+## Default Visibilities (365)
+
+Functions in Solidity have visibility specifiers that dictate how they can be called. The visibility determines whether a function can be called externally by users, by other derived contracts, only internally, or only externally.
+
+Functions default to **public**, allowing users to call them externally. We shall now see how incorrect use of visibility specifiers can lead to some devastating vulnerabilities in smart contracts.
+
 ### First Parity Multisig Wallet Hack (368)
 
 In the [first Parity multisig hack](https://blog.openzeppelin.com/on-the-parity-wallet-multisig-hack-405a8c12e8f7), about **$31M** worth of ether was stolen, mostly from three wallets.
