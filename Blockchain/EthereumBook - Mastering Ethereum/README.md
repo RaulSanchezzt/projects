@@ -278,9 +278,57 @@ Then, copy the address of the [WalletLibrary](https://sepolia.etherscan.io/addre
 - **\_REQUIRED:** 2
 - **\_DAYLIMIT:** 40
 
-This _Wallet_ is going to belong to the [Account 1](https://sepolia.etherscan.io/address/0xb8b74dc6bce6b16dcd634ab94600a3c9967e6f0d) and [Account 2](https://sepolia.etherscan.io/address/0x4bde5261866ebe1f0f8f6d157767de73c6749b47), they require both signatures to to anything and they can't spend more than _40 ETH_. So [they](https://sepolia.etherscan.io/tx/0x71154a99bad201fc6d2b58c7abf98ee23b2432516c1c9629ae69fc5bb2f9bfb1) send [some](https://sepolia.etherscan.io/tx/0x2c19ea046737a0f70556b244a493cdaafa038570c28cfc9416b253c501530521) _ether_. Now the contract has **1 ETH** of balance but it **depends** in the **WalletLibrary**.
+This _Wallet_ is going to belong to the [Account 1](https://sepolia.etherscan.io/address/0xb8b74dc6bce6b16dcd634ab94600a3c9967e6f0d) and [Account 2](https://sepolia.etherscan.io/address/0x4bde5261866ebe1f0f8f6d157767de73c6749b47), they require both signatures to do anything and they can't spend more than _40 ETH_. So [they](https://sepolia.etherscan.io/tx/0x71154a99bad201fc6d2b58c7abf98ee23b2432516c1c9629ae69fc5bb2f9bfb1) send [some](https://sepolia.etherscan.io/tx/0x2c19ea046737a0f70556b244a493cdaafa038570c28cfc9416b253c501530521) _ether_. Now the contract has **1 ETH** of balance but it **depends** in the **WalletLibrary**.
 
 The [Attacker](https://sepolia.etherscan.io/address/0xA4c4F1A9b450Ee6eDf9d7A3C46f77d3A16fbE8c0), became the [owner](https://sepolia.etherscan.io/tx/0x33fe5197a1b90423cdba56d88904a8d92c37c5ffdbcf2bef5f2084ffe73f49c5) of **WalletLibrary** using the `initWallet` method and he [destroyed](https://sepolia.etherscan.io/tx/0x45a6ec900a39daab6ed7fa2f19c5a67ec2afe75b1fb88bcb6f2a7e375dc5daec) the contract using the `kill` method. Now the [Account 1](https://sepolia.etherscan.io/address/0xb8b74dc6bce6b16dcd634ab94600a3c9967e6f0d) and [Account 2](https://sepolia.etherscan.io/address/0x4bde5261866ebe1f0f8f6d157767de73c6749b47) can't use his wallet because it depends on a contract that **don't exists anymore** :(.
+
+### First Parity Multisig Wallet Hack (368)
+
+In the [first Parity multisig hack](https://blog.openzeppelin.com/on-the-parity-wallet-multisig-hack-405a8c12e8f7), about **$31M** worth of ether was stolen, mostly from three wallets.
+
+Essentially, the multisig wallet is constructed from a base `Wallet` contract, which calls a **library** contract containing the core functionality as we saw on the previous hack. In this [version](https://github.com/openethereum/parity-ethereum/blob/4d08e7b0aec46443bf26547b17d10cb302672835/js/src/contracts/snippets/enhanced-wallet.sol) we can see on line [107](https://github.com/openethereum/parity-ethereum/blob/4d08e7b0aec46443bf26547b17d10cb302672835/js/src/contracts/snippets/enhanced-wallet.sol#L107) and [216](https://github.com/openethereum/parity-ethereum/blob/4d08e7b0aec46443bf26547b17d10cb302672835/js/src/contracts/snippets/enhanced-wallet.sol#L216) that neither of the functions specifies their visibility, so both default to **public**.
+
+In addition, using the `fallback function`, it forwards all unmatched function calls to the **library** using `delegatecall`, on line [424](https://github.com/openethereum/parity-ethereum/blob/4d08e7b0aec46443bf26547b17d10cb302672835/js/src/contracts/snippets/enhanced-wallet.sol#L424) of **Wallet**.
+
+Because these functions were accidentally left **public**, an [attacker](https://etherscan.io/address/0xb3764761e297d6f121e79c32a65829cd1ddb4d32#internaltx) was able to call these functions on deployed contracts, resetting the ownership to the attacker’s address. Being the owner, the attacker then drained the wallets of all their ether.
+
+Let's try to reproduce this attack, first, [deploy](https://sepolia.etherscan.io/tx/0x6663a87a6e7b50b173daf74e4179b31645945c85f7b992a420309681a4b23f3d) the [WalletLibrary](https://sepolia.etherscan.io/address/0xa6f28b37b7d83d69147a1031bf579a6792d48e2a) using the **Account 1**: [0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D](https://sepolia.etherscan.io/address/0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D).
+
+Then, copy the address of the [WalletLibrary](https://sepolia.etherscan.io/address/0xa6f28b37b7d83d69147a1031bf579a6792d48e2a) contract and paste it on the **Wallet** contract _(line 521)_. After that, [deploy](https://sepolia.etherscan.io/tx/0x18f985c7dd107b54ef70e223526525af7d9fb9634e50dc0b961f65ec01762c7f) the [Wallet](https://sepolia.etherscan.io/address/0xc9560a019f4921b868b4ba7ec4e3adf46a8022eb) contract. In the constructor of this **Smart Contract** there are this fields:
+
+- **\_OWNERS:** ["0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D","0x4bDE5261866EBE1f0f8F6d157767De73c6749b47"]
+- **\_REQUIRED:** 2
+- **\_DAYLIMIT:** 40
+
+This _Wallet_ is going to belong to the [Account 1](https://sepolia.etherscan.io/address/0xb8b74dc6bce6b16dcd634ab94600a3c9967e6f0d) and [Account 2](https://sepolia.etherscan.io/address/0x4bde5261866ebe1f0f8f6d157767de73c6749b47), they require both signatures to do anything and they can't spend more than _40 ETH_. So they [send](https://sepolia.etherscan.io/tx/0xbffa1db19830f9ee862c712c51b139e564e5ceb332b43b670623185d44ffe41a) some _ether_. Now the contract has **1 ETH** of balance.
+
+Using **Remix IDE**, we can interact with this contract, in this case because we created and deployed it, but in a real case, let's imagine we have the `source code` and the **address** of the contract. Using the `initWallet` method of the **WalletLibrary** we can get the `CALLDATA` to become the owner of the **Wallet**:
+
+- **\_OWNERS:** ["0xA4c4F1A9b450Ee6eDf9d7A3C46f77d3A16fbE8c0"]
+- **\_REQUIRED:** 1
+- **\_DAYLIMIT:** 1000
+
+Now, instead of making a transaction, copy the `CALLDATA`:
+
+```py
+0xe46dcfeb0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000003e80000000000000000000000000000000000000000000000000000000000000001000000000000000000000000a4c4f1a9b450ee6edf9d7a3c46f77d3a16fbe8c0
+```
+
+In **Remix IDE** paste this `CALLDATA` in the field of the **Wallet** contract. The [Attacker](https://sepolia.etherscan.io/address/0xA4c4F1A9b450Ee6eDf9d7A3C46f77d3A16fbE8c0), became the [owner](https://sepolia.etherscan.io/tx/0x4a8dd9808547bd44bd60e695e307ed9b477f7de25d2788b09feb80436b171164) of the **Wallet** and we only require **1 signature** to do anything.
+
+Finally, let's use the `execute` method of the **WalletLibrary** in **Remix IDE** to get the `CALLDATA` we need to steal the funds and send it to us:
+
+- **\_TO:** 0xA4c4F1A9b450Ee6eDf9d7A3C46f77d3A16fbE8c0
+- **\_VALUE:** 1000000000000000000
+- **\_DATA:** 0x
+
+Copy the `CALLDATA`:
+
+```py
+0xb61d27f6000000000000000000000000a4c4f1a9b450ee6edf9d7a3c46f77d3a16fbe8c00000000000000000000000000000000000000000000000000de0b6b3a764000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000000
+```
+
+Paste it into the **Wallet** `CALLDATA` field to [execute](https://sepolia.etherscan.io/tx/0xd7ba07654a7e298360282b491bde9c4693e8b0d6c34d0b5c17ee6cbbc086c935) the function. We can see how the **Wallet** [sent](https://sepolia.etherscan.io/tx/0xd7ba07654a7e298360282b491bde9c4693e8b0d6c34d0b5c17ee6cbbc086c935) the funds as an _internal transaction_ :D.
 
 ## External Links
 
@@ -313,3 +361,6 @@ The [Attacker](https://sepolia.etherscan.io/address/0xA4c4F1A9b450Ee6eDf9d7A3C46
   - [Parity Multisig Hacked. Again (363)](https://medium.com/chain-cloud-company-blog/parity-multisig-hack-again-b46771eaa838)
   - [An In-Depth Look at the Parity Multisig Bug (363)](https://hackingdistributed.com/2017/07/22/deep-dive-parity-bug/)
   - [Contracts that were exploited (363)](https://github.com/openethereum/parity-ethereum/blob/b640df8fbb964da7538eef268dffc125b081a82f/js/src/contracts/snippets/enhanced-wallet.sol)
+- Default Visibilities
+  - [Visibility Specifiers (365)](https://docs.soliditylang.org/en/latest/contracts.html#visibility-and-getters)
+  - [A hacker stole $31M of Ether (368)](https://www.freecodecamp.org/news/a-hacker-stole-31m-of-ether-how-it-happened-and-what-it-means-for-ethereum-9e5dc29e33ce)
