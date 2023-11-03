@@ -370,3 +370,15 @@ Paste it into the **Wallet** `CALLDATA` field to [execute](https://sepolia.ether
 - Default Visibilities
   - [Visibility Specifiers (365)](https://docs.soliditylang.org/en/latest/contracts.html#visibility-and-getters)
   - [A hacker stole $31M of Ether (368)](https://www.freecodecamp.org/news/a-hacker-stole-31m-of-ether-how-it-happened-and-what-it-means-for-ethereum-9e5dc29e33ce)
+- Entropy Illusion
+  - [RANDAO (370)](https://github.com/randao/randao)
+  - [Commit - Reveal Technique (371)](https://ethereum.stackexchange.com/questions/191/how-can-i-securely-generate-a-random-number-in-my-smart-contract)
+  - [Predicting Random Numbers in Ethereum Smart Contracts (373)](https://blog.positive.com/predicting-random-numbers-in-ethereum-smart-contracts-e5358c6b8620)
+- External Contract Referencing
+  - [Reentrancy Honey Pot (381)](https://www.reddit.com/r/ethdev/comments/7x5rwr/tricked_by_a_honeypot_contract_or_beaten_by/)
+- Short Address / Parameter Attack
+  - [Can't understanď the ERC20 short address attack (382)](https://www.reddit.com/r/ethereum/comments/6r9nhj/cant_understand_the_erc20_short_address_attack/)
+  - [ABI specification (383)](https://docs.soliditylang.org/en/latest/abi-spec.html)
+  - [The ERC20 Short Address Attack Explained (383)](https://ericrafaloff.com/analyzing-the-erc20-short-address-attack/)
+  - [ERC20 Standard (383)](https://github.com/ethereum/ercs/blob/master/ERCS/erc-20.md)
+  - [Function signature/selector (383)](https://docs.soliditylang.org/en/latest/abi-spec.html#function-selector)
