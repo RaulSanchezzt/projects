@@ -382,3 +382,15 @@ Paste it into the **Wallet** `CALLDATA` field to [execute](https://sepolia.ether
   - [The ERC20 Short Address Attack Explained (383)](https://ericrafaloff.com/analyzing-the-erc20-short-address-attack/)
   - [ERC20 Standard (383)](https://github.com/ethereum/ercs/blob/master/ERCS/erc-20.md)
   - [Function signature/selector (383)](https://docs.soliditylang.org/en/latest/abi-spec.html#function-selector)
+  - [How to Find $10M Just by Reading the Blockchain (383)](https://web.archive.org/web/20170627012416/https://blog.golemproject.net/how-to-find-10m-by-just-reading-blockchain-6ae9d39fcd95)
+- Unchecked CALL Return Values
+  - [Scanning Live Ethereum Contracts (386)](https://hackingdistributed.com/2016/06/16/scanning-live-ethereum-contracts-for-bugs/)
+  - [Recommended withdrawal pattern (388)](https://docs.soliditylang.org/en/latest/common-patterns.html#withdrawal-from-contracts)
+  - [Real-World Example: Etherpot (389)](https://github.com/etherpot/contract/blob/master/app/contracts/lotto.sol)
+  - [King of the Ether Post-Mortem Investigation (389)](https://www.kingoftheether.com/postmortem.html)
+- Race Conditions/Front Running
+  - [Ethereum Smart Contract Best Practices (390)](https://scsfg.io/hackers/frontrunning/)
+  - [To Sink Frontrunners, Send in the Submarines (393)](https://hackingdistributed.com/2017/08/28/submarine-sends/)
+  - [Real-World Examples: ERC20 and Bancor (395)](https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/edit#heading=h.m9fhqynw2xvt)
+  - [Front-runs on the Bancor exchange in Python (395)](https://hackernoon.com/front-running-bancor-in-150-lines-of-python-with-ethereum-api-d5e2bfd0d798)
+  - [Frontrunning Bancor — DevCon3 (395)](https://www.youtube.com/watch?v=RL2nE3huNiI)
