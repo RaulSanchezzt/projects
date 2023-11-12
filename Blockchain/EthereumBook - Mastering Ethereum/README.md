@@ -336,6 +336,44 @@ Copy the `CALLDATA`:
 
 Paste it into the **Wallet** `CALLDATA` field to [execute](https://sepolia.etherscan.io/tx/0xd7ba07654a7e298360282b491bde9c4693e8b0d6c34d0b5c17ee6cbbc086c935) the function. We can see how the **Wallet** [sent](https://sepolia.etherscan.io/tx/0xd7ba07654a7e298360282b491bde9c4693e8b0d6c34d0b5c17ee6cbbc086c935) the funds as an _internal transaction_ :D.
 
+## Uninitialized Storage Pointers (409)
+
+Uninitialized local storage variables may contain the value of other storage variables in the contract; this fact can cause unintentional vulnerabilities, or be exploited deliberately.
+
+Let's [deploy](https://sepolia.etherscan.io/tx/0x3c3170f939a0387db8a457a160a9f466fa9d8c0935e62ade19f8e0a3d730e469) the `NameRegistrar.sol`, This simple name registrar has only one function. When the contract is `unlocked`, it allows anyone to register a name (as a `bytes32` hash) and map that name to an address. The registrar is initially locked, and the `require` on line 27 prevents `register` from adding name records.
+
+State variables are stored sequentially in slots as they appear in the contract. Thus, `unlocked` exists in `slot[0]`, `registeredNameRecord` in `slot[1]`, and `resolve` in `slot[2]`, etc.
+
+```py
+[call]from: 0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0Dto: NameRegistrar.unlocked()data: 0x6a5...e2650
+from	0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D
+to	NameRegistrar.unlocked() 0x112cdECbebEdc451A335D069EA1131f1b34BF009
+input	0x6a5...e2650
+decoded input	{}
+decoded output	{
+	"0": "bool: false"
+}
+```
+
+The next piece of the puzzle is that Solidity by default puts complex data types, such as **structs**, in **storage** when initializing them as local variables.
+
+Therefore, `newRecord` on line 20 defaults to **storage**. The vulnerability is caused by the fact that `newRecord` is not initialized. Because it defaults to storage, it is mapped to **storage** `slot[0]`, which currently contains a pointer to `unlocked`.
+
+This means that `unlocked` can be directly modified, simply by the `bytes32` `_name` parameter of the **register** function. Therefore, if the last byte of `_name` is nonzero, it will modify the last byte of storage `slot[0]` and directly change unlocked to `true`. So let's [register](https://sepolia.etherscan.io/tx/0x64f4c9073ad984e8dba724bcbefd084408b8d66a9ca7c15bb1ee8b4b0b66e115) a new name: `0x0000000000000000000000000000000000000000000000000000000000000001`
+
+Now we can see the value of `unlocked` has changed:
+
+```py
+[call]from: 0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0Dto: NameRegistrar.unlocked()data: 0x6a5...e2650
+from	0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D
+to	NameRegistrar.unlocked() 0x112cdECbebEdc451A335D069EA1131f1b34BF009
+input	0x6a5...e2650
+decoded input	{}
+decoded output	{
+	"0": "bool: true"
+}
+```
+
 ## External Links
 
 ### 1. What is Ethereum ?
@@ -394,3 +432,26 @@ Paste it into the **Wallet** `CALLDATA` field to [execute](https://sepolia.ether
   - [Real-World Examples: ERC20 and Bancor (395)](https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/edit#heading=h.m9fhqynw2xvt)
   - [Front-runs on the Bancor exchange in Python (395)](https://hackernoon.com/front-running-bancor-in-150-lines-of-python-with-ethereum-api-d5e2bfd0d798)
   - [Frontrunning Bancor — DevCon3 (395)](https://www.youtube.com/watch?v=RL2nE3huNiI)
+- Denial of Service (DoS)
+  - [GovernMental Ponzi (400)](https://etherscan.io/address/0xf45717552f12ef7cb65e95476f217ea008167ae3#code)
+  - [Contract required the deletion of a large mapping in order to withdraw the ether (400)](https://www.reddit.com/r/ethereum/comments/4ghzhv/governmentals_1100_eth_jackpot_payout_is_stuck/)
+  - [1,100 ether were finally obtained with a transaction that used 2.5M gas (400)](https://etherscan.io/tx/0x0d80d67202bd9cb6773df8dd2020e7190a1b0793e8ec4fc105257e8128f0506b)
+- Block Timestamp Manipulation
+  - [Can a contract safely rely on block.timestamp? (401)](https://ethereum.stackexchange.com/questions/413/can-a-contract-safely-rely-on-block-timestamp)
+  - [block.number (403)](https://docs.soliditylang.org/en/latest/units-and-global-variables.html#block-and-transaction-properties)
+  - [BAT ICO (403)](https://etherscan.io/address/0x0d8775f648430679a709e98d2b0cb6250d2887ef#code)
+  - [History of Ethereum Security Vulnerabilities Hacks and Their Fixes (403)](https://applicature.com/blog/blockchain-technology/history-of-ethereum-security-vulnerabilities-hacks-and-their-fixes)
+- Constructors with Care
+  - [Ethernaut challenges (405)](https://github.com/OpenZeppelin/ethernaut)
+  - [Real-World Example: Rubixi (408)](https://etherscan.io/address/0xe82719202e5965Cf5D9B6673B7503a3b92DE20be#code)
+  - [Bitcointalk discussion about Rubixi (408)](https://bitcointalk.org/index.php?topic=1400536.60)
+- Uninitialized Storage Pointers
+  - [Data Location (409)](https://docs.soliditylang.org/en/latest/types.html#data-location)
+  - [Layout of state variables in storage (409)](https://docs.soliditylang.org/en/latest/internals/layout_in_storage.html)
+  - [Layout in memory (409)](https://docs.soliditylang.org/en/latest/internals/layout_in_memory.html)
+  - [Storage Allocation Exploits in Ethereum Smart Contracts (409)](https://medium.com/cryptronics/storage-allocation-exploits-in-ethereum-smart-contracts-16c2aa312743)
+  - [Futher reading in this Reddit thread (409)](https://www.reddit.com/r/ethdev/comments/7wp363/how_does_this_honeypot_work_it_seems_like_a/)
+  - [OpenAddressLottery Honey Pot (413)](https://etherscan.io/address/0x741f1923974464efd0aa70e77800ba5d9ed18902#code)
+  - [Analysis to the Redditt thread (413)](https://www.reddit.com/r/ethdev/comments/7wp363/how_does_this_honeypot_work_it_seems_like_a/)
+  - [CryptoRoulette Honey Pot (413)](https://etherscan.io/address/0x8685631276cfcf17a973d92f6dc11645e5158c0c#code)
+  - [An analysis of a couple Ethereum honeypot contracts (413)](https://medium.com/coinmonks/an-analysis-of-a-couple-ethereum-honeypot-contracts-5c07c95b0a8d)
