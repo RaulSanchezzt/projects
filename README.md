@@ -5,11 +5,12 @@ This is a repository to store the projects I create when I do courses or to prac
 ## [Blockchain](/Blockchain/)
 
 - [CryptoZombies](/Blockchain/CryptoZombies/)
-- [EthereumBook - Mastering Ethereum](/Blockchain/EthereumBook%20-%20Mastering%20Ethereum/)⭐
+- [EthereumBook - Mastering Ethereum](/Blockchain/EthereumBook%20-%20Mastering%20Ethereum/) ⭐
 - [Metaschool - First Smart Contract](/Blockchain/Metaschool%20-%20First%20Smart%20Contract/)
 - [OpenWebinars - First dApp](/Blockchain/OpenWebinars%20-%20First%20dApp/)
 - [OpenWebinars - Smart Contracts & Solidity](/Blockchain/OpenWebinars%20-%20Smart%20Contracts%20%26%20Solidity/) ⭐
 - [OpenWebinars - Tools to Blockchain Developers](/Blockchain/OpenWebinars%20-%20Tools%20to%20Blockchain%20Developers/)
+- [OpenZeppelin - Ethernaut](/Blockchain/OpenZeppelin%20-%20Ethernaut/) ⭐
 - [Udemy - Blockchain Bootcamp Zero to Expert](/Blockchain/Udemy%20-%20Blockchain%20Bootcamp%20Zero%20to%20Expert/)
 
 ## [DataBases](/DataBases/)
@@ -19,7 +20,7 @@ This is a repository to store the projects I create when I do courses or to prac
 
 ## [DevOps](/DevOps/)
 
-- [ASIR - Proyecto Web Casero](/DevOps/ASIR%20-%20Proyecto%20Web%20Casero/)⭐
+- [ASIR - Proyecto Web Casero](/DevOps/ASIR%20-%20Proyecto%20Web%20Casero/) ⭐
 - [ASIR - Trabajo Fin de Grado](/DevOps/ASIR%20-%20Trabajo%20Fin%20de%20Grado/) ⭐
 - [OpenWebinars - Automated Testing with Docker](/DevOps/OpenWebinars%20-%20Automated%20Testing%20with%20Docker/)
 - [OpenWebinars - Docker for Devs](/DevOps/OpenWebinars%20-%20Docker%20for%20Devs/) ⭐
