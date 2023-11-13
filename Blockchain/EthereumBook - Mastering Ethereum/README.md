@@ -455,3 +455,7 @@ decoded output	{
   - [Analysis to the Redditt thread (413)](https://www.reddit.com/r/ethdev/comments/7wp363/how_does_this_honeypot_work_it_seems_like_a/)
   - [CryptoRoulette Honey Pot (413)](https://etherscan.io/address/0x8685631276cfcf17a973d92f6dc11645e5158c0c#code)
   - [An analysis of a couple Ethereum honeypot contracts (413)](https://medium.com/coinmonks/an-analysis-of-a-couple-ethereum-honeypot-contracts-5c07c95b0a8d)
+- Floating Point and Precision
+  - [DS-Math (416)](https://github.com/dapphub/ds-math)
+  - [EthStick Contract (417)](https://etherscan.io/address/0xbA6284cA128d72B25f1353FadD06Aa145D9095Af#code)
+  - [Ethereum Contracts Are Going to Be Candy for Hackers (417)](https://web.archive.org/web/20170415105204/https://vessenes.com/ethereum-contracts-are-going-to-be-candy-for-hackers/)
