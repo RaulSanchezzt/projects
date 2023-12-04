@@ -459,3 +459,6 @@ decoded output	{
   - [DS-Math (416)](https://github.com/dapphub/ds-math)
   - [EthStick Contract (417)](https://etherscan.io/address/0xbA6284cA128d72B25f1353FadD06Aa145D9095Af#code)
   - [Ethereum Contracts Are Going to Be Candy for Hackers (417)](https://web.archive.org/web/20170415105204/https://vessenes.com/ethereum-contracts-are-going-to-be-candy-for-hackers/)
+- Tx.Origin Authentication
+  - [Understanding msg.sender, tx.origin, and External Calls (418)](https://medium.com/@solidity101/demystifying-ethereum-understanding-msg-sender-tx-origin-and-external-calls-dbf02d9e947d)
+  - [Solidity: Tx Origin Attacks (418)](https://medium.com/coinmonks/solidity-tx-origin-attacks-58211ad95514)
