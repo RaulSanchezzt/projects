@@ -55,8 +55,58 @@ Start the app using the command:
 $ npm run dev
 ```
 
-Now we can see that the front-end is working, let's install the `web3 Solana dependencie`:
+Now we can see that the front-end is working, let's install `web3 Solana`:
 
 ```js
 $ npm install @solana/web3.js
 ```
+
+## Intro to writing data
+
+First, I installed the [CLI Solana Tool Suite](https://docs.solana.com/cli/install-solana-cli-tools) and generated a [File System Wallet](https://docs.solana.com/wallet-guide/file-system-wallet):
+
+```js
+$ solana --version
+solana-cli 1.17.13 (src:ef1fb9ec; feat:4006346914, client:SolanaLabs)
+
+$ solana-keygen new -o /home/raul/.config/solana/id.json
+Generating a new keypair
+
+For added security, enter a BIP39 passphrase
+
+NOTE! This passphrase improves security of the recovery seed phrase NOT the
+keypair file itself, which is stored as insecure plain text
+
+BIP39 Passphrase (empty for none):
+
+Wrote new keypair to /home/raul/.config/solana/id.json
+===============================================================================
+pubkey: ErBr1AKnuudg54UWE5TaDrj5TJwW6PdazjBxVZ7fYVqw
+===============================================================================
+
+$ solana-keygen verify ErBr1AKnuudg54UWE5TaDrj5TJwW6PdazjBxVZ7fYVqw /home/raul/.config/solana/id.json
+Verification for public key: ErBr1AKnuudg54UWE5TaDrj5TJwW6PdazjBxVZ7fYVqw: Success
+```
+
+Write, the code and execute it to check that we can transfer from an account to another:
+
+```js
+$ npx esrun transfer.ts
+89C36mjiq91kRRsXWN3VPaVwtfDp8b8qt5Dyz3h7vWEp
+
+suppliedToPubkey: 89C36mjiq91kRRsXWN3VPaVwtfDp8b8qt5Dyz3h7vWEp
+
+✅ Loaded our own keypair, the destination public key, and connected to Solana
+
+(node:8919) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+💸 Finished! Sent 200000000 to the address 89C36mjiq91kRRsXWN3VPaVwtfDp8b8qt5Dyz3h7vWEp.
+
+Transaction signature is 4QvrMBnWGMJYpgci2fDQ1M1sVh3DtrpSZzF3Xv4C5py6qgmqmyuYEBX4Vn3DFW8BsNMT18RowWKPXKj4TYVLKCn8!
+
+You can view your transaction on the Solana Explorer at:
+https://explorer.solana.com/tx/4QvrMBnWGMJYpgci2fDQ1M1sVh3DtrpSZzF3Xv4C5py6qgmqmyuYEBX4Vn3DFW8BsNMT18RowWKPXKj4TYVLKCn8?cluster=devnet
+```
+
+As we can see in this [TX](https://explorer.solana.com/tx/4QvrMBnWGMJYpgci2fDQ1M1sVh3DtrpSZzF3Xv4C5py6qgmqmyuYEBX4Vn3DFW8BsNMT18RowWKPXKj4TYVLKCn8?cluster=devnet), we transfered `0.2 SOL` which as of _24/12/2023_ has a value of **$22**. The transaction took less than 1 second and the status is **confirmed**, meaning it has been validated and is immutable.
