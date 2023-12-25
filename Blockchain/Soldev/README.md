@@ -110,3 +110,5 @@ https://explorer.solana.com/tx/4QvrMBnWGMJYpgci2fDQ1M1sVh3DtrpSZzF3Xv4C5py6qgmqm
 ```
 
 As we can see in this [TX](https://explorer.solana.com/tx/4QvrMBnWGMJYpgci2fDQ1M1sVh3DtrpSZzF3Xv4C5py6qgmqmyuYEBX4Vn3DFW8BsNMT18RowWKPXKj4TYVLKCn8?cluster=devnet), we transfered `0.2 SOL` which as of _24/12/2023_ has a value of **$22**. The transaction took less than 1 second and the status is **confirmed**, meaning it has been validated and is immutable.
+
+## Intro to

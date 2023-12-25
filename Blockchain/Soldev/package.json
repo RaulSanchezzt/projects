@@ -3,6 +3,10 @@
     "@digitak/esrun": "^3.2.25",
     "@solana-developers/node-helpers": "^1.2.1",
     "@solana/web3.js": "^1.87.6",
+    "bigint-buffer": "^1.1.5",
+    "bindings": "^1.5.0",
+    "dotenv": "^16.3.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.2"
   },
   "name": "soldev",
