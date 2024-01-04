@@ -130,3 +130,53 @@ Then, we can see we are the **owner**...
 ```
 
 [Submit](https://sepolia.etherscan.io/tx/0x942fb6c2348a5a78b41271fc4f1bd05e8b7b621700be40c94ed14c6c6caa46aa) level instance to finish.
+
+## 3. Coin Flip
+
+First, [create](https://sepolia.etherscan.io/tx/0x8d11cd80e3d5da41c68bc7980f67552149d25cce53b394fc1efd864b0a4f34ea) the [level instance](https://sepolia.etherscan.io/address/0x773318bacf964d3999687d33eacbbb740152c3c8):
+
+> This is a coin flipping game where you need to build up your winning streak by guessing the outcome of a coin flip. To complete this level you'll need to use your psychic abilities to guess the correct outcome 10 times in a row.
+
+The `flip()` _function_ is using the **current block number** to decide the side of the coin, so the random-seeming function is not really random.
+
+We can access the block number in a separate smart contract and predict the output of the `flip()`. The only thing we need to take care of is the first _function_ that checks if the `blockValue` is the same as the previously stored hash, indicating a **replay attack**.
+
+```js
+if (lastHash == blockValue) {
+  revert();
+}
+```
+
+So we cannot use a `for loop` and call the `flip()` 10 times in a **single transaction** since that transaction will be written in a single block and in the second iteration of the loop the **lastHash** will become equal to the `blockValue` resulting in a revert.
+
+Let's [deploy](https://sepolia.etherscan.io/tx/0x760f8f157fb1149dda2535d48c7378e98c2b6d3e6e9cfcea66fd766feec9b7ce) the [CoinFlipAttack.sol](https://sepolia.etherscan.io/address/0xe41b7732da112da4316cd46fa02d2e1cdadb70ee) contract using the `CoinFlip` **address**. Then execute the `IncreaseItBy1` function 10 times manually.
+
+[Submit](https://sepolia.etherscan.io/tx/0xbf59e2e5635ace5352f38c7aea27490945c47a89d48a7c827002f533a8498f4c) level instance to finish.
+
+## 4. Telephone
+
+First, [create](https://sepolia.etherscan.io/tx/0x46005f807d17164bab005d2b454c5da4abb5117323b70fbe217205a2f783b05e) the [level instance](https://sepolia.etherscan.io/address/0x06ec685d245564f48e78f588a1e9eec043c55ce0):
+
+> Claim ownership of the contract below to complete this level.
+
+Let's see who is the **current owner**:
+
+```js
+> await contract.owner()
+'0x2C2307bb8824a0AbBf2CC7D76d8e63374D2f8446'
+```
+
+The conditional in the `changeOwner()` can be passed only if the **origin** of the transaction is not the same as the **last message sender**.
+
+The `tx.origin` global variable refers to the **original external account** that started the transaction while `msg.sender` refers to the immediate account (it could be external or another contract account) **that invokes the function**.
+
+We simply need to [deploy](https://sepolia.etherscan.io/tx/0xcdf553eb8a9b78aea0692315e52c3f616298719e3b4ffd971c5d64f1cc7e57fb) an intermediate [contract](https://sepolia.etherscan.io/address/0x7314d9756c11fb57563765dddce504ce517789c3) and [invoke](https://sepolia.etherscan.io/tx/0x8a316bffcb349d36d786e98d2c900be4bd5063b764451ec7e4084e1da384f9f1) the `changeOwner()` from it.
+
+And now we are the **owner**:
+
+```js
+> await contract.owner()
+'0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D'
+```
+
+[Submit](https://sepolia.etherscan.io/tx/0x8ef00b350da3dfd038b951bdbbef343257d3512e693616ec9ee78564dbd33b5c) level instance to finish.
