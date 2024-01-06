@@ -111,4 +111,32 @@ https://explorer.solana.com/tx/4QvrMBnWGMJYpgci2fDQ1M1sVh3DtrpSZzF3Xv4C5py6qgmqm
 
 As we can see in this [TX](https://explorer.solana.com/tx/4QvrMBnWGMJYpgci2fDQ1M1sVh3DtrpSZzF3Xv4C5py6qgmqmyuYEBX4Vn3DFW8BsNMT18RowWKPXKj4TYVLKCn8?cluster=devnet), we transfered `0.2 SOL` which as of _24/12/2023_ has a value of **$22**. The transaction took less than 1 second and the status is **confirmed**, meaning it has been validated and is immutable.
 
-## Intro to
+## Intro to Custom on Chain Programs
+
+We’re going to create a script to ping an on-chain program that increments a counter each time it has been pinged.
+
+```js
+$ npx esrun index.ts
+🔑 Loaded keypair ErBr1AKnuudg54UWE5TaDrj5TJwW6PdazjBxVZ7fYVqw!
+⚡️ Connected to Solana devnet cluster!
+✅ Transaction completed! You can view your transaction on the Solana Explorer at:
+https://explorer.solana.com/tx/5zjmf6aPaJqHNgTS4nXzuCf4v3MMyALBiYkWiRSGuckX72oE2GjNz78mvEHmMRDT9NQTfFMJButAavuNP6uQjSbK?cluster=devnet
+```
+
+In this [transaction](https://explorer.solana.com/tx/5zjmf6aPaJqHNgTS4nXzuCf4v3MMyALBiYkWiRSGuckX72oE2GjNz78mvEHmMRDT9NQTfFMJButAavuNP6uQjSbK?cluster=devnet) we can see at the end that we **pinned** the program.
+
+## Interact with wallets
+
+When adding wallet support to an existing react app, you start by installing the appropriate packages. You’ll need `@solana/wallet-adapter-base`, `@solana/wallet-adapter-react`. If you plan to use the provided react components, you'll also need to add `@solana/wallet-adapter-react-ui`.
+
+We'll download the [starter code for this project](https://github.com/Unboxed-Software/solana-ping-frontend/tree/starter). Install the modules and see its current state:
+
+```js
+$ npm install
+
+$ npm run dev
+```
+
+Now we can ping the program using a frontend and view the [transaction](https://explorer.solana.com/tx/4VqinXj7sMLJVQLHnPcrdWLnz4bcHApFseRNLEQBor8ugNyWcA6uPJgL6K6LymTxCJ9zAbajiQer9BzBo6pujQQg?cluster=devnet) on the explorer.
+
+Finally, we have built an application that lets user connect their Phantom wallet and [send](https://explorer.solana.com/tx/493ikok4UkzE51NQtreeHEoaCwT7FUBXccpARX5gbsg5M2J2dwUPXz1pFCJ4kqo8edWPRqtsAmgNPCD58ahanSat?cluster=devnet) SOL to another account.
