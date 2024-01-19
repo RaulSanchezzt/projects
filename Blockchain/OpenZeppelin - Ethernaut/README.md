@@ -237,3 +237,32 @@ Check the owner then:
 ```
 
 We're the owner! [Submit](https://sepolia.etherscan.io/tx/0x83096032db4598b3df1e941ca72e355be3e5f4ae5c4cb7a31f66db80f36cfff8) level instance to finish.
+
+## 7. Force
+
+First, [create](https://sepolia.etherscan.io/tx/0x5071671a06eb0e1f419db930a77799c67d3db1635b3a22651ac7d15aba425fce) the [level instance](https://sepolia.etherscan.io/address/0x9bc434083fc6290954de65dfe7ef0966516dcbbe):
+
+> Some contracts will simply not take your money ¯\_(ツ)\_/¯
+> The goal of this level is to make the balance of the contract greater than zero.
+> Things that might help:
+>
+> - Fallback methods
+> - Sometimes the best way to attack a contract is with another contract.
+
+To solve this challenge, we need to learn all the possible way for which a contract can receive **ETH**:
+
+- The contract implements at least a payable function and we send some ether along with the function call.
+
+- The contract implements a receive function.
+
+- The contract implements a payable fallback function.
+
+- The last and more "strange" way that can and has created various security problem is via `selfdestruct()`
+
+- Bonus point: a contract without a receive Ether function can also receive Ether as a recipient of a coinbase transaction (miner block reward)
+
+But in this case we can't use any function of the contract because there is none. So let's [create](https://sepolia.etherscan.io/tx/0xc394964d3868ca1e5e9e819fcdd2ac28f05d72bb67071365f6b02a074475242d) another [contract](https://sepolia.etherscan.io/address/0xbef7d187ae8bab4b0c381f6fc4fe83a20636afac) which we can destroy.
+
+Then, [deposit](https://sepolia.etherscan.io/tx/0x28a46c2ea8031fb6c22a671bb40d01c3323431e326e91598f44043b820804bd0) some funds to our contract. Finally, [destroy](https://sepolia.etherscan.io/tx/0xe85463dd371a21ec90e029c1153251d4819fcc1017d28a5652594337cfd22d91) our contract so the funds go to **Force**.
+
+There is no way to stop an attacker from sending ether to a contract by self destroying. , [submit](https://sepolia.etherscan.io/tx/0x07d8e31cf986362d329081444b2ab5e251e17ab207454061b35c4b1675a799a4) level instance to finish.
