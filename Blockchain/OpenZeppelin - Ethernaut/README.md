@@ -266,3 +266,45 @@ But in this case we can't use any function of the contract because there is none
 Then, [deposit](https://sepolia.etherscan.io/tx/0x28a46c2ea8031fb6c22a671bb40d01c3323431e326e91598f44043b820804bd0) some funds to our contract. Finally, [destroy](https://sepolia.etherscan.io/tx/0xe85463dd371a21ec90e029c1153251d4819fcc1017d28a5652594337cfd22d91) our contract so the funds go to **Force**.
 
 There is no way to stop an attacker from sending ether to a contract by self destroying. , [submit](https://sepolia.etherscan.io/tx/0x07d8e31cf986362d329081444b2ab5e251e17ab207454061b35c4b1675a799a4) level instance to finish.
+
+## 8. Vault
+
+First, [create](https://sepolia.etherscan.io/tx/0x32d431015f054e174396bef4a64a8490bda82bab3e98914f3040bd31f00e24a6) the [level instance](https://sepolia.etherscan.io/address/0x9498102915b69af90a7adfbd0eaa1f6e93e8fb15):
+
+> Unlock the vault to pass the level!
+
+As we see this contract, the _password_ is stored in a **private** variable. Looking for some [information](https://solidity-by-example.org/hacks/accessing-private-data/) we see that using the _web3_ library we can see the data stored in the blockchain. Let's see if it's **locked**:
+
+```js
+> await contract.locked()
+true
+```
+
+So let's see the _password_, on our contract instance, in the second slot.
+
+```js
+> await web3.eth.getStorageAt("0x9498102915b69Af90a7aDFBD0eaA1f6e93E8fb15", 1, console.log)
+"0x412076657279207374726f6e67207365637265742070617373776f7264203a29"
+```
+
+This is the **password** and if we want to see it on plain text:
+
+```js
+> await web3.utils.hexToAscii("0x412076657279207374726f6e67207365637265742070617373776f7264203a29");
+'A very strong secret password :)'
+```
+
+Then, [unlock](https://sepolia.etherscan.io/tx/0x2eb6370f64b6692610c833bd2703905b229785de221788cc0d4a862c7d8a4f37) the **vault**! And check if it's locked now:
+
+```js
+> await contract.locked()
+false
+```
+
+It's important to remember that marking a variable as private **only prevents other contracts from accessing it**. State variables marked as private and local variables are still publicly accessible.
+
+To ensure that data is private, it needs to be encrypted before being put onto the blockchain. In this scenario, the decryption key should never be sent on-chain, as it will then be visible to anyone who looks for it.
+
+[zk-SNARKs](https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell) provide a way to determine whether someone possesses a secret parameter, without ever having to reveal the parameter.
+
+Finally, [submit](https://sepolia.etherscan.io/tx/0x49de099ce9177e8a876444fd73e91a7d60eeed32a71f4023d90a3ec2becf130f) level instance to finish.
