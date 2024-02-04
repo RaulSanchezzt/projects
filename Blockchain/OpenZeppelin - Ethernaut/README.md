@@ -308,3 +308,39 @@ To ensure that data is private, it needs to be encrypted before being put onto t
 [zk-SNARKs](https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell) provide a way to determine whether someone possesses a secret parameter, without ever having to reveal the parameter.
 
 Finally, [submit](https://sepolia.etherscan.io/tx/0x49de099ce9177e8a876444fd73e91a7d60eeed32a71f4023d90a3ec2becf130f) level instance to finish.
+
+## 9. King
+
+First, [create](https://sepolia.etherscan.io/tx/0xfc2cdf8abe18674f00dce87d1df031f57a13425f26cc7d3ec55c13e44d77831a) the [level instance](https://sepolia.etherscan.io/address/0x0ccf317b54faa02ec70e0d0895e9512672ab9114):
+
+> - The contract below represents a very simple game: whoever sends it an amount of ether that is larger than the current prize becomes the new king. On such an event, the overthrown king gets paid the new prize, making a bit of ether in the process! As ponzi as it gets xD
+> - Such a fun game. Your goal is to break it.
+> - When you submit the instance back to the level, the level is going to reclaim kingship. You will beat the level if you can avoid such a self proclamation.
+
+Our main goal is to become the King and deny anyone else from claiming kingship after us. To do that, we must create a contract that doesn't accept incoming transactions. Let's see who is the current **king**:
+
+```js
+> await contract._king()
+'0x3049C00639E6dfC269ED1451764a046f7aE500c6'
+```
+
+Before we deploy our Smart Contract, we should check what's the **prize**:
+
+```js
+> balance = await web3.eth.getBalance("0x0ccf317b54fAA02ec70E0d0895e9512672AB9114")
+'1000000000000000' // wei
+
+> web3.utils.fromWei(balance, 'ether');
+'0.001' // eth
+```
+
+Okay, so now let's [deploy](https://sepolia.etherscan.io/tx/0xe6d6d882f479a16188c6b6ae9b5ec97866302c2536fd44b6b6c005f2db58f172) our [Attack contract](https://sepolia.etherscan.io/address/0x8d16281e49520a9448097d9bac4db34d55c3dcf4) with 0.01 **ETH**. _(10000000000000000 wei)_. This contract sends the _prize_ of ether to the original contract to become the **king**:
+
+```js
+> await contract._king()
+'0x8D16281E49520A9448097D9BAc4dB34d55C3dcf4'
+```
+
+If we submit the instance, the level is going to reclaim kingship but they can't because our contract deny incoming transactions :)
+
+Finally, [submit](https://sepolia.etherscan.io/tx/0xe76eec4953973924ca767ad46de3fca170d9710a1eddefa649b47d2c2b1a0a03) level instance to finish. See [King of the Ether](https://www.kingoftheether.com/thrones/kingoftheether/index.html) & [King of the Ether Postmortem](https://www.kingoftheether.com/postmortem.html).
