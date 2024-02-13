@@ -344,3 +344,33 @@ Okay, so now let's [deploy](https://sepolia.etherscan.io/tx/0xe6d6d882f479a16188
 If we submit the instance, the level is going to reclaim kingship but they can't because our contract deny incoming transactions :)
 
 Finally, [submit](https://sepolia.etherscan.io/tx/0xe76eec4953973924ca767ad46de3fca170d9710a1eddefa649b47d2c2b1a0a03) level instance to finish. See [King of the Ether](https://www.kingoftheether.com/thrones/kingoftheether/index.html) & [King of the Ether Postmortem](https://www.kingoftheether.com/postmortem.html).
+
+## 10. Re-entrancy
+
+First, [create](https://sepolia.etherscan.io/tx/0x6f9a896912764530a2041de05232263a18880339a9821cee7c652298581a0ba7) the [level instance](https://sepolia.etherscan.io/address/0x0b60d10a46ae9f4675935d22e7e1ae5107a89301):
+
+> The goal of this level is for you to steal all the funds from the contract.
+> Things that might help:
+>
+> - Untrusted contracts can execute code where you least expect it.
+> - Fallback methods
+> - Throw/revert bubbling
+> - Sometimes the best way to attack a contract is with another contract.
+
+This is a classic **reentrancy** attack, where we attack with other contract that calls the `withdraw` function and triggers the **fallback** function and this function will call the `withdraw` function again.
+
+Let's code the **Attacker** contract and [deploy](https://sepolia.etherscan.io/tx/0x88f5c76cf8523b2fd1f7c33420fe39850e82bde7485d73e68c243a23adc83930) it. [Deposit](https://sepolia.etherscan.io/tx/0x212279a04585fbbb73d9c484fa0d60072bf2f22527febb2ebc3865faa4d13286) somo _ETH_ in the [Attack Contract](https://sepolia.etherscan.io/address/0xa0302982973828f1be51c7a43451c50213165549) to get started.
+
+Then start the [Attack](https://sepolia.etherscan.io/tx/0xb4ec58788203911c9349a6b009d5410069bdd76f2185e7b899a0064d85283873) and check how we steal the funds and withdraw it to our address **destroying** the contract.
+
+We can see the [Internal TXs](https://sepolia.etherscan.io/address/0x0b60d10a46ae9f4675935d22e7e1ae5107a89301#internaltx) of the _instance level_.
+
+Finally, [submit](https://sepolia.etherscan.io/tx/0x17223240b44a41be62d2e02e1afd0719bfbfa3ba3bf7b5633a4beb6d6ef7fc03) level instance to finish.
+
+In order to prevent re-entrancy attacks when moving funds out of your contract, use the [Checks-Effects-Interactions pattern](https://docs.soliditylang.org/en/develop/security-considerations.html#use-the-checks-effects-interactions-pattern) being aware that `call` will only return false without interrupting the execution flow. Solutions such as [ReentrancyGuard](https://docs.openzeppelin.com/contracts/2.x/api/utils#ReentrancyGuard) or [PullPayment](https://docs.openzeppelin.com/contracts/2.x/api/payment#PullPayment) can also be used.
+
+`transfer` and `send` are no longer recommended solutions as they can potentially break contracts after the Istanbul hard fork [Source 1](https://consensys.io/diligence/blog/2019/09/stop-using-soliditys-transfer-now/) [Source 2](https://forum.openzeppelin.com/t/reentrancy-after-istanbul/1742).
+
+Always assume that the receiver of the funds you are sending can be another contract, not just a regular address. Hence, it can execute code in its payable fallback method and re-enter your contract, possibly messing up your state/logic.
+
+The famous **DAO hack** used reentrancy to extract a huge amount of ether from the victim contract. [See 15 lines of code that could have prevented TheDAO Hack](https://blog.openzeppelin.com/15-lines-of-code-that-could-have-prevented-thedao-hack-782499e00942).
