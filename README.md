@@ -2,6 +2,10 @@
 
 This is a repository to store the projects I create when I do courses or to practice some technology.
 
+## [AI](/AI/)
+
+- [Python Deep Learning](/AI/Python%20Deep%20Learning/)
+
 ## [Blockchain](/Blockchain/)
 
 - [CryptoZombies](/Blockchain/CryptoZombies/)
