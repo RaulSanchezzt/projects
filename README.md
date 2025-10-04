@@ -18,6 +18,10 @@ This is a repository to store the projects I create when I do courses or to prac
 - [Soldev](/Blockchain/Soldev/)
 - [Udemy - Blockchain Bootcamp Zero to Expert](/Blockchain/Udemy%20-%20Blockchain%20Bootcamp%20Zero%20to%20Expert/)
 
+## [Cloud](/Cloud/)
+
+- [Udemy - AWS Certified Cloud Practitioner](/Cloud/Udemy%20-%20AWS%20Certified%20Cloud%20Practitioner/)
+
 ## [DataBases](/DataBases/)
 
 - [OpenWebinars - Databases Administration](/DataBases/OpenWebinars%20-%20Databases%20Administration/)
